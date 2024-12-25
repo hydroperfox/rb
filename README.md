@@ -6,9 +6,9 @@ Create beautiful reference portals using Markdown.
 
 ### Configuration file
 
-The configuration file is stored with the name **rb.xml**.
+The configuration file consists of the filename **rb.xml**.
 
-**Example file**
+**Example**
 
 ```xml
 <?xml version="1.0"?>
@@ -38,6 +38,14 @@ The configuration file is stored with the name **rb.xml**.
                     <!-- src/demo-reference/foo.md -->
                     <title>Foo</title>
                     <path>foo.md</path>
+
+                    <sections>
+                        <section>
+                            <!-- src/demo-reference/foo/bar.md -->
+                            <title>Bar</title>
+                            <path>foo/bar.md</path>
+                        </section>
+                    </sections>
                 </section>
             </sections>
         </reference>
