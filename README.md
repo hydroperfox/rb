@@ -36,6 +36,7 @@ The configuration file consists of the filename **rb.xml**.
             <top-bar-colors top="#999" bottom="#000"/>
             <home>
                 <!-- src/demo-reference/index.md -->
+                <title>Demo</title>
                 <path>index.md</path>
             </home>
             <sections>

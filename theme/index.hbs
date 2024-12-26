@@ -15,12 +15,23 @@
         <div class="top-bar" style="{{top_bar_background}}">
             {{{top_bar_items}}}
         </div>
+
+        <!-- current section path + previous/next buttons + company logo -->
+        {{{header_controls}}}
     </header>
     <main>
-        {{{current_section_path}}}
+        <div class="content-container">
+            <div class="chapter-nav">
+                {{{chapter_nav}}}
+            </div>
+            <div class="content">
+                {{{content}}}
+            </div>
+        </div>
     </main>
     <footer>
-        {{{current_section_path}}}
+        <!-- current section path + previous/next buttons -->
+        {{{footer_controls}}}
     </footer>
 </body>
 </html>
