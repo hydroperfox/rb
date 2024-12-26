@@ -24,6 +24,11 @@ export class Portal
     icon = null;
 
     /**
+     * @type {string | null}
+     */
+    companyLogo = null;
+
+    /**
      * @type {TopBarColors | null}
      */
     topBarColors = null;
@@ -69,6 +74,10 @@ export class Portal
         // <icon>
         const iconel = XMLUtil.element(portalNode, null, "icon");
         portal.icon = iconel ? iconel.textContent : null;
+
+        // <company-logo>
+        const companylogoel = XMLUtil.element(portalNode, null, "company-logo");
+        portal.companyLogo = companylogoel ? companylogoel.textContent : null;
 
         // <top-bar-colors>
         const topbarcolorsel = XMLUtil.element(portalNode, null, "top-bar-colors");
