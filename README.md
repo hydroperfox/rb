@@ -25,6 +25,8 @@ The configuration file consists of the filename **rb.xml**.
         <reference>
             <base-path>demo-reference</base-path>
             <title>Demo Reference</title>
+            <!-- Optional description -->
+            <description>Demo reference.</description>
             <!-- Optional icon -->
             <icon>icon.png</icon>
             <!-- Optional top bar colors -->

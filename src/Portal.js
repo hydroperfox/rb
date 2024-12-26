@@ -68,7 +68,7 @@ export class Portal
 
         // <icon>
         const iconel = XMLUtil.element(portalNode, null, "icon");
-        portal.icon = iconel ? descriptionel.textContent : null;
+        portal.icon = iconel ? iconel.textContent : null;
 
         // <top-bar-colors>
         const topbarcolorsel = XMLUtil.element(portalNode, null, "top-bar-colors");
@@ -110,6 +110,11 @@ export class Reference
     icon = null;
 
     /**
+     * @type {string}
+     */
+    description = "";
+
+    /**
      * @type {TopBarColors | null}
      */
     topBarColors = null;
@@ -142,7 +147,11 @@ export class Reference
 
         // <icon>
         const iconel = XMLUtil.element(element, null, "icon");
-        reference.icon = iconel ? descriptionel.textContent : null;
+        reference.icon = iconel ? iconel.textContent : null;
+
+        // <description>
+        const descriptionel = XMLUtil.element(element, null, "description");
+        reference.description = (descriptionel ? descriptionel.textContent : null) ?? "";
 
         // <top-bar-colors>
         const topbarcolorsel = XMLUtil.element(element, null, "top-bar-colors");
