@@ -9,5 +9,12 @@ program
     .command("build")
     .description("Build the reference portal.")
     .action(options => {
-        // do it
+        new BuildProcess().run();
     });
+
+class BuildProcess
+{
+    run()
+    {
+    }
+}
