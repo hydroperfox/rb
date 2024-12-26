@@ -74,16 +74,18 @@ export class Portal
         const topbarcolorsel = XMLUtil.element(portalNode, null, "top-bar-colors");
         if (topbarcolorsel !== null)
         {
-            portal.topBarColors = new TopBarColors(
-                topbarcolorsel.getAttribute("top") ?? "#555",
-                topbarcolorsel.getAttribute("bottom") ?? "#000");
+            portal.topBarColors = TopBarColors.fromXML(topbarcolorsel);
         }
 
         // <references>
         const referencesel = XMLUtil.element(portalNode, null, "references");
-        for (const referenceel of XMLUtil.elements(referencesel))
+        if (referencesel)
         {
-            TODO();
+            // <reference>
+            for (const referenceel of XMLUtil.elements(referencesel, null, "reference"))
+            {
+                portal.references.push(Reference.fromXML(referenceel));
+            }
         }
 
         return portal;
@@ -121,6 +123,51 @@ export class Reference
      * @type {Section[]}
      */
     sections = [];
+
+    /**
+     * @param {Element} element
+     * @returns {Reference} 
+     */
+    static fromXML(element)
+    {
+        const reference = new Reference();
+
+        // <title>
+        const titleel = XMLUtil.element(element, null, "title");
+        reference.title = (titleel ? titleel.textContent : null) ?? "undefined";
+
+        // <base-path>
+        const basepathel = XMLUtil.element(element, null, "base-path");
+        reference.basePath = (basepathel ? basepathel.textContent : null) ?? "";
+
+        // <icon>
+        const iconel = XMLUtil.element(element, null, "icon");
+        reference.icon = iconel ? descriptionel.textContent : null;
+
+        // <top-bar-colors>
+        const topbarcolorsel = XMLUtil.element(element, null, "top-bar-colors");
+        if (topbarcolorsel !== null)
+        {
+            reference.topBarColors = TopBarColors.fromXML(topbarcolorsel);
+        }
+
+        // <home>
+        const homeel = XMLUtil.element(element, null, "home");
+        reference.home = homeel ? Section.fromXML(homeel) : null;
+
+        // <sections>
+        const sectionsel = XMLUtil.element(element, null, "sections");
+        if (sectionsel)
+        {
+            // <section>
+            for (const secel of XMLUtil.elements(sectionsel, null, "section"))
+            {
+                reference.sections.push(Section.fromXML(secel));
+            }
+        }
+
+        return reference;
+    }
 }
 
 export class Section
@@ -139,6 +186,40 @@ export class Section
      * @type {Section[]}
      */
     sections = [];
+
+    /**
+     * @param {Element} element
+     * @returns {Section}
+     */
+    static fromXML(element)
+    {
+        const section = new Section();
+
+        // <title>
+        const titleel = XMLUtil.element(element, null, "title");
+        section.title = (titleel ? titleel.textContent : null) ?? "undefined";
+
+        // <path>
+        const pathel = XMLUtil.element(element, null, "path");
+        if (!pathel)
+        {
+            throw new Error("Missing <path> option for a section.");
+        }
+        section.path = pathel.textContent;
+
+        // <sections>
+        const sectionsel1 = XMLUtil.element(element, null, "sections");
+        if (sectionsel1)
+        {
+            // <section>
+            for (const secel of XMLUtil.elements(sectionsel1, null, "section"))
+            {
+                section.sections.push(Section.fromXML(secel));
+            }
+        }
+
+        return section;
+    }
 }
 
 export class TopBarColors
@@ -161,5 +242,16 @@ export class TopBarColors
     {
         this.top = top;
         this.bottom = bottom;
+    }
+
+    /**
+     * @param {Element} element 
+     * @returns {TopBarColors}
+     */
+    static fromXML(element)
+    {
+        return new TopBarColors(
+            element.getAttribute("top") ?? "#555",
+            element.getAttribute("bottom") ?? "#000");
     }
 }
