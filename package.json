@@ -5,6 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "hydroperrb": "bin/hydroperrb.mjs"
+  },
   "type": "module",
   "keywords": [],
   "author": "Matheus Dias de Souza <hydroperfox@gmail.com>",
