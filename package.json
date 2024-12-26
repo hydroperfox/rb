@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type": "module",
   "keywords": [],
   "author": "Matheus Dias de Souza <hydroperfox@gmail.com>",
   "license": "Apache-2.0",
