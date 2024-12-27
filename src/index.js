@@ -6,6 +6,7 @@ import * as path from "path";
 import * as url_ns from "url";
 import { Portal, Reference, Section, TopBarColors } from "./Portal";
 import { TOCItem } from "./TOCItem";
+import { CommonPathUtil } from "./util";
 
 program
     .name("hydroperrb")
@@ -147,8 +148,9 @@ class BuildProcess
     {
         let p = section.path;
         p = p.endsWith(".md") ? p.slice(0, p.length - 3) : p;
+        p = p.replace(/\\/g, "/");
 
-        const tocItem2 = new TOCItem(TOCItem.SECTION, section.title, path.resolve("/", reference.slug, p + ".html"));
+        const tocItem2 = new TOCItem(TOCItem.SECTION, section.title, "/" + reference.slug + "/" + p + ".html"));
         tocItem2.originalObject = section;
 
         for (const section1 of section.sections)
@@ -217,20 +219,59 @@ class BuildProcess
     /**
      * @param {Object} item
      * @param {string} outputDir
-     * @param {Object[] | null} currentSectionPath
+     * @param {Object[] | null} currentSectionPath Array that starts with a `Portal` object
+     * followed by a `Reference` object followed by `Section` objects.
      */
     outputHTML(item, outputDir, currentSectionPath = null)
     {
+        // Path to root (used in output code)
+        let pathToRoot = "";
+        // Path to reference home (used in output code)
+        let pathToReference = "";
+
         if (item instanceof Portal)
         {
+            // Path to root (used in output code)
+            pathToRoot = "";
+            // Path to reference (used in output code)
+            pathToReference = "./";
+
             //
         }
         else if (item instanceof Reference)
         {
+            /**
+             * Portal
+             * @type {Portal}
+             */
+            const portal = currentSectionPath[0];
+
+            // Path to root (used in output code)
+            pathToRoot = "..";
+            // Path to reference (used in output code)
+            pathToReference = "./";
+
             //
         }
         else if (item instanceof Section)
         {
+            /**
+             * Portal
+             * @type {Portal}
+             */
+            const portal = currentSectionPath[0];
+
+            /**
+             * Reference.
+             * @type {Reference}
+             */
+            const reference = currentSectionPath[1];
+
+            // Path to root (used in output code)
+            pathToRoot = CommonPathUtil.pathToRoot(CommonPathUtil.join(reference.basePath, item.path));
+            // Path to reference (used in output code)
+            pathToReference = CommonPathUtil.pathToRoot(CommonPathUtil.join(item.path));
+
             //
         }
         else

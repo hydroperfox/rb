@@ -41,6 +41,8 @@ export class Portal
 
     /**
      * @param {string} str
+     * @throws {Error} If XML is invalid.
+     * @returns {Portal}
      */
     static fromXMLString(str)
     {
@@ -49,6 +51,8 @@ export class Portal
 
     /**
      * @param {Document} xml
+     * @throws {Error} If XML is invalid.
+     * @returns {Portal}
      */
     static fromXML(document)
     {
@@ -67,6 +71,16 @@ export class Portal
         // <base-path>
         const basepathel = XMLUtil.element(portalNode, null, "base-path");
         portal.basePath = (basepathel ? basepathel.textContent : null) ?? "";
+
+        if (/(^|[\/\\])(\.\.?)([\/\\]|$)/.test(portal.basePath))
+        {
+            throw new Error("The <base-path> option must not contain `..` or `.` components.");
+        }
+
+        if (/\s*\//.test(portal.basePath))
+        {
+            throw new Error("The <base-path> option must not be absolute.");
+        }
 
         // <description>
         const descriptionel = XMLUtil.element(portalNode, null, "description");
@@ -146,6 +160,7 @@ export class Reference
 
     /**
      * @param {Element} element
+     * @throws {Error} If XML is invalid.
      * @returns {Reference} 
      */
     static fromXML(element)
@@ -161,6 +176,16 @@ export class Reference
         // <base-path>
         const basepathel = XMLUtil.element(element, null, "base-path");
         reference.basePath = (basepathel ? basepathel.textContent : null) ?? "";
+
+        if (/(^|[\/\\])(\.\.?)([\/\\]|$)/.test(reference.basePath))
+        {
+            throw new Error("The <base-path> option must not contain `..` or `.` components.");
+        }
+
+        if (/\s*\//.test(reference.basePath))
+        {
+            throw new Error("The <base-path> option must not be absolute.");
+        }
 
         // <icon>
         const iconel = XMLUtil.element(element, null, "icon");
@@ -215,6 +240,7 @@ export class Section
 
     /**
      * @param {Element} element
+     * @throws {Error} If XML is invalid.
      * @returns {Section}
      */
     static fromXML(element)
@@ -232,6 +258,16 @@ export class Section
             throw new Error("Missing <path> option for a section.");
         }
         section.path = pathel.textContent;
+
+        if (/(^|[\/\\])(\.\.?)([\/\\]|$)/.test(section.path))
+        {
+            throw new Error("The <path> option must not contain `..` or `.` components.");
+        }
+
+        if (/\s*\//.test(section.path))
+        {
+            throw new Error("The <path> option must not be absolute.");
+        }
 
         // <sections>
         const sectionsel1 = XMLUtil.element(element, null, "sections");

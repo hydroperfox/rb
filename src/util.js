@@ -37,11 +37,45 @@ export const XMLUtil = {
      * @param {string} localName 
      * @returns {boolean}
      */
-    testName(element, nsURI, localName) {
+    testName(element, nsURI, localName)
+    {
         if (nsURI === null && localName == "*")
         {
             return true;
         }
         return element.tagName == localName && element.namespaceURI === nsURI;
+    },
+};
+
+/**
+ * Utilities for simple forward slash (`/`) based paths.
+ */
+export const CommonPathUtil = {
+    /**
+     * @param {...string[]} paths 
+     * @returns string
+     */
+    join(...paths)
+    {
+        const r = [];
+        let startSlash = false;
+        for (let p of paths)
+        {
+            const startsWithSlash = p.startsWith("/");
+            startSlash = startSlash || startsWithSlash;
+            p = startsWithSlash ? p.slice(1) : p;
+            p = p.endsWith("/") ? p.slice(0, p.length - 1) : p;
+            r.push(p);
+        }
+        return r.length == 0 ? "/" : r.join("/");
+    },
+
+    /**
+     * @param {string} p - A relative slash path.
+     * @returns {string}
+     */
+    pathToRoot(p)
+    {
+        return "../".repeat(p.split(/[\/\\]+/g).length);
     },
 };
