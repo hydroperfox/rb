@@ -61,7 +61,7 @@ The configuration file consists of the filename **rb.xml**.
 
 ### Media
 
-Media (PNG, BMP, JPG/JPEG, SVG, MP4) get copied from the `<base-path>` path of the `<portal>` element, where for instance, given `<base-path>src</base-path>`, a file such as `src/demo-reference/img.png` will have the static path equals `/demo-reference/img.png`.
+Media (PNG, BMP, GIF, JPG/JPEG, SVG, MP4) get copied from the `<base-path>` path of the `<portal>` element, where for instance, given `<base-path>src</base-path>`, a file such as `src/demo-reference/img.png` will have the static path equals `/demo-reference/img.png`.
 
 ## License
 

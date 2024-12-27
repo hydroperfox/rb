@@ -58,6 +58,9 @@ class BuildProcess
 
         // Generate HTML for the table of contents (TOC)
         const tocHTML = this.generateTOCHTML(toc);
+
+        // Copy media files
+        this.copyMediaFiles(path.resolve(workingDir, portal.basePath), outputDir);
     }
 
     /**
@@ -75,6 +78,26 @@ class BuildProcess
         {
             const filenameInsideTheme = path.normalize(filename).slice(themePath.length);
             const outFilename = path.resolve(outputDir, filenameInsideTheme);
+            fs.mkdirSync(path.resolve(outFilename, ".."), { recursive: true });
+            fs.writeFileSync(outFilename, fs.readFileSync(filename));
+        }
+    }
+
+    /**
+     * @param {string} mediaDir
+     * @param {string} outputDir
+     */
+    copyMediaFiles(mediaDir, outputDir)
+    {
+        const filenames = globSync(path.resolve(mediaDir, "**/*.{png,bmp,gif,jpg,jpeg,svg,mp4}"));
+        outputDir = path.normalize(outputDir);
+        mediaDir = path.normalize(mediaDir);
+        mediaDir = mediaDir + (mediaDir.endsWith(path.sep) ? "" : path.sep);
+
+        for (const filename of filenames)
+        {
+            const filenameInsideMediaDir = path.normalize(filename).slice(mediaDir.length);
+            const outFilename = path.resolve(outputDir, filenameInsideMediaDir);
             fs.mkdirSync(path.resolve(outFilename, ".."), { recursive: true });
             fs.writeFileSync(outFilename, fs.readFileSync(filename));
         }
