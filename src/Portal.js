@@ -1,5 +1,6 @@
 import { DOMParser } from "@xmldom/xmldom";
 import { XMLUtil } from "./util";
+import slug from "slug";
 
 export class Portal
 {
@@ -111,6 +112,11 @@ export class Reference
     /**
      * @type {string}
      */
+    slug = "";
+
+    /**
+     * @type {string}
+     */
     basePath = "";
 
     /**
@@ -149,6 +155,8 @@ export class Reference
         // <title>
         const titleel = XMLUtil.element(element, null, "title");
         reference.title = (titleel ? titleel.textContent : null) ?? "undefined";
+
+        reference.slug = slug(reference.title);
 
         // <base-path>
         const basepathel = XMLUtil.element(element, null, "base-path");
