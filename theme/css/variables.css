@@ -1,6 +1,10 @@
 :root {
+    --background: #fff;
+    --foreground: #000;
     --font: Arimo, Verdana, Arial, sans;
+    --font-size: 0.9rem;
     --mono-font: "Courier Prime", "Courier New", monospace;
+    --mono-font-size: 0.87rem;
 
     /* 21x26 */
     --section-connector-one: url(data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAaAQMAAABij4UAAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAAbW1tBjjpswAAAAJ0Uk5TAP9bkSK1AAAAGUlEQVR4nGNkUHjAyMDAwEg0rVVGmnoIDQCkzAy7bIroqQAAAABJRU5ErkJggg==);
