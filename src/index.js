@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { program } from "commander";
 import { globSync } from "glob";
+import * as Handlebars from "handlebars";
 import * as fs from "fs";
 import * as path from "path";
 import * as url_ns from "url";
@@ -52,8 +53,11 @@ class BuildProcess
         const outputDir = path.resolve(workingDir, "out");
         fs.mkdirSync(outputDir);
 
+        // Theme path
+        const themePath = path.resolve(selfScriptDir, "../theme");
+
         // Copy the built-in theme
-        this.copyTheme(path.resolve(selfScriptDir, "../theme"), outputDir);
+        this.copyTheme(themePath, outputDir);
 
         // Setup the table of contents (TOC)
         const toc = this.setupTOC(portal);
@@ -64,8 +68,11 @@ class BuildProcess
         // Copy media files
         this.copyMediaFiles(path.resolve(workingDir, portal.basePath), outputDir);
 
+        // IndexHandlebars
+        const indexHandlebars = Handlebars.compile(fs.readFileSync(path.resolve(themePath, "index.hbs"), "utf-8"));
+
         // Generate HTML for the portal root and each section
-        this.outputHTML(portal, outputDir);
+        this.outputHTML(portal, outputDir, indexHandlebars);
 
         // Generate JavaScript
         TODO();
@@ -221,8 +228,9 @@ class BuildProcess
      * @param {string} outputDir
      * @param {Object[] | null} currentSectionPath Array that starts with a `Portal` object
      * followed by a `Reference` object followed by `Section` objects.
+     * @param {HandlebarsTemplateDelegate<any>} indexHandlebars
      */
-    outputHTML(item, outputDir, currentSectionPath = null)
+    outputHTML(item, outputDir, currentSectionPath = null, indexHandlebars)
     {
         // Path to root (used in output code)
         let pathToRoot = "";
