@@ -1,11 +1,28 @@
+# Portal start
+
+- [ ] Omit section path and header controls, showing title and content consisting of reference links.
+
 # Home
 
 - [ ] Omit current section path and show the title together to the header controls at the left side.
 
-# Non-home
+# Not home nor portal start
 
 - [ ] Show the title together with page content.
 
 # Search
 
 - [ ] Implement searching for section titles.
+
+# TOC
+
+- [ ] Show TOC when page loads
+- [ ] Expand TOC sections based on current section (if not directly in home or portal start)
+
+# Style
+
+- [ ] Heading
+- [ ] Quote block
+- [ ] Code (`<pre>`, `<code>`)
+- [ ] Anchors
+- [ ] Table
