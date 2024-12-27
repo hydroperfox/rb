@@ -27,3 +27,7 @@
 - [ ] Code (`<pre>`, `<code>`)
 - [ ] Anchors
 - [ ] Table
+
+# Serve command
+
+- [ ] Provide a `serve` subcommand that watches for file changes, building the portal once and everytime the file system changes.
