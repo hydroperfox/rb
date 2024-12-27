@@ -1,0 +1,8 @@
+:root {
+    --font: Arimo, Verdana, Arial, sans;
+    --mono-font: "Courier Prime", "Courier New", monospace;
+
+    /* 21x26 */
+    --section-connector-one: url(data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAaAQMAAABij4UAAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAAbW1tBjjpswAAAAJ0Uk5TAP9bkSK1AAAAGUlEQVR4nGNkUHjAyMDAwEg0rVVGmnoIDQCkzAy7bIroqQAAAABJRU5ErkJggg==);
+    --section-connector-multi: url(data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAaAgMAAAAlL//QAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAxQTFRFAAAAbW1t////AAAAye+jmwAAAAR0Uk5TAP///7MtQIgAAAA0SURBVHicY2RgYPnDwMDIAAaMJPBYA/6vAVJsS37FgKgV35Cpn08T9mAIQlRC9ZFsHzIPAPWHGxsCBzMFAAAAAElFTkSuQmCC);
+}
