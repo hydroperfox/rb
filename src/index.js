@@ -64,7 +64,7 @@ class BuildProcess
         this.copyMediaFiles(path.resolve(workingDir, portal.basePath), outputDir);
 
         // Generate HTML for the portal root and each section
-        TODO();
+        this.outputHTML(portal, outputDir);
 
         // Generate JavaScript
         TODO();
@@ -124,7 +124,7 @@ class BuildProcess
 
         for (const reference of portal.references)
         {
-            const tocItem2 = new TOCItem(TOCItem.REFERENCE, reference.title, reference.slug);
+            const tocItem2 = new TOCItem(TOCItem.REFERENCE, reference.title, "/" + reference.slug);
             tocItem2.originalObject = reference;
 
             for (const section of reference.sections)
@@ -148,7 +148,7 @@ class BuildProcess
         let p = section.path;
         p = p.endsWith(".md") ? p.slice(0, p.length - 3) : p;
 
-        const tocItem2 = new TOCItem(TOCItem.SECTION, section.title, path.resolve(reference.slug, p + ".html"));
+        const tocItem2 = new TOCItem(TOCItem.SECTION, section.title, path.resolve("/", reference.slug, p + ".html"));
         tocItem2.originalObject = section;
 
         for (const section1 of section.sections)
@@ -212,5 +212,30 @@ class BuildProcess
                 break;
         }
         return builder.join("");
+    }
+
+    /**
+     * @param {Object} item
+     * @param {string} outputDir
+     * @param {Object[] | null} currentSectionPath
+     */
+    outputHTML(item, outputDir, currentSectionPath = null)
+    {
+        if (item instanceof Portal)
+        {
+            //
+        }
+        else if (item instanceof Reference)
+        {
+            //
+        }
+        else if (item instanceof Section)
+        {
+            //
+        }
+        else
+        {
+            throw new Error("Could not match item.");
+        }
     }
 }
