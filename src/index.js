@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { program } from "commander";
 import { globSync } from "glob";
 import * as fs from "fs";
@@ -32,7 +33,7 @@ class BuildProcess
         const rbxmlpath = path.resolve(workingDir, "rb.xml");
         if (!(fs.existsSync(rbxmlpath) && fs.lstatSync(rbxmlpath).isFile()))
         {
-            console.error("Could not read rb.xml configuration file.");
+            console.error(chalk.red("Error:"), "Could not read rb.xml configuration file.");
             return;
         }
         let portal = null;
@@ -42,7 +43,7 @@ class BuildProcess
         }
         catch (e)
         {
-            console.error(e.message);
+            console.error(chalk.red("Error:"), e.message);
             return;
         }
 
@@ -61,6 +62,11 @@ class BuildProcess
 
         // Copy media files
         this.copyMediaFiles(path.resolve(workingDir, portal.basePath), outputDir);
+
+        TODO();
+
+        // Finish
+        console.log(chalk.green("Successfully generated reference portal at:"), outputDir);
     }
 
     /**
