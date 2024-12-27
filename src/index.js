@@ -120,12 +120,12 @@ class BuildProcess
      */
     setupTOC(portal)
     {
-        const tocItem1 = new TOCItem(TOCItem.PORTAL, portal.title, "/");
+        const tocItem1 = new TOCItem(TOCItem.PORTAL, portal.title, "index.html");
         tocItem1.originalObject = portal;
 
         for (const reference of portal.references)
         {
-            const tocItem2 = new TOCItem(TOCItem.REFERENCE, reference.title, "/" + reference.slug);
+            const tocItem2 = new TOCItem(TOCItem.REFERENCE, reference.title, CommonPathUtil.excludeTrailingSlash(reference.basePath) + "/" + "index.html");
             tocItem2.originalObject = reference;
 
             for (const section of reference.sections)
@@ -146,11 +146,11 @@ class BuildProcess
      */
     setupTOCSection(reference, section, tocItem1)
     {
-        let p = section.path;
+        let p = reference.basePath + "/" + section.path;
         p = p.endsWith(".md") ? p.slice(0, p.length - 3) : p;
-        p = p.replace(/\\/g, "/");
+        p = p.replace(/[\\\/]+/g, "/");
 
-        const tocItem2 = new TOCItem(TOCItem.SECTION, section.title, "/" + reference.slug + "/" + p + ".html"));
+        const tocItem2 = new TOCItem(TOCItem.SECTION, section.title, p + ".html");
         tocItem2.originalObject = section;
 
         for (const section1 of section.sections)
@@ -188,7 +188,7 @@ class BuildProcess
                 builder.push('</div></div>');
                 break;
             case TOCItem.REFERENCE:
-                builder.push(`<div class="section-nav-ref" data-slug="${toc.originalObject.slug}"><div>`);
+                builder.push(`<div class="section-nav-ref" data-path="${CommonPathUtil.excludeTrailingSlash(toc.originalObject.basePath)}"><div>`);
                 builder.push(`<b>${toc.title}</b>`);
                 builder.push('</div><div class="section-list">');
                 for (const tocItem of toc.subitems)
@@ -240,6 +240,8 @@ class BuildProcess
         }
         else if (item instanceof Reference)
         {
+            // Reference should be in a directory plus an index.html file.
+
             /**
              * Portal
              * @type {Portal}
@@ -270,7 +272,7 @@ class BuildProcess
             // Path to root (used in output code)
             pathToRoot = CommonPathUtil.pathToRoot(CommonPathUtil.join(reference.basePath, item.path));
             // Path to reference (used in output code)
-            pathToReference = CommonPathUtil.pathToRoot(CommonPathUtil.join(item.path));
+            pathToReference = CommonPathUtil.pathToRoot(item.path);
 
             //
         }

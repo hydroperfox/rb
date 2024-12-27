@@ -67,7 +67,7 @@ export const CommonPathUtil = {
             p = p.endsWith("/") ? p.slice(0, p.length - 1) : p;
             r.push(p);
         }
-        return r.length == 0 ? "/" : r.join("/");
+        return (startSlash || r.length == 0 ? "/" : "") + r.join("/");
     },
 
     /**
@@ -77,5 +77,15 @@ export const CommonPathUtil = {
     pathToRoot(p)
     {
         return "../".repeat(p.split(/[\/\\]+/g).length);
+    },
+
+    /**
+     * @param {string} p - A simple slash path.
+     * @returns {string}
+     */
+    excludeTrailingSlash(p)
+    {
+        p = p.replace(/[\\]/g, "/");
+        return p.endsWith("/") ? p.slice(0, p.length - 1) : p;
     },
 };

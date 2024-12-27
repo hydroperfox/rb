@@ -17,7 +17,7 @@
 
 # TOC
 
-- [ ] Show TOC when page loads
+- [ ] Show TOC when page loads, replacing anchor links there so that they are relative to current page
 - [ ] Expand TOC sections based on current reference and section (if not directly in home or portal start)
 
 # Style

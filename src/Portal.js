@@ -1,6 +1,5 @@
 import { DOMParser } from "@xmldom/xmldom";
 import { XMLUtil } from "./util";
-import slug from "slug";
 
 export class Portal
 {
@@ -126,11 +125,6 @@ export class Reference
     /**
      * @type {string}
      */
-    slug = "";
-
-    /**
-     * @type {string}
-     */
     basePath = "";
 
     /**
@@ -171,8 +165,6 @@ export class Reference
         const titleel = XMLUtil.element(element, null, "title");
         reference.title = (titleel ? titleel.textContent : null) ?? "undefined";
 
-        reference.slug = slug(reference.title);
-
         // <base-path>
         const basepathel = XMLUtil.element(element, null, "base-path");
         reference.basePath = (basepathel ? basepathel.textContent : null) ?? "";
@@ -185,6 +177,11 @@ export class Reference
         if (/\s*\//.test(reference.basePath))
         {
             throw new Error("The <base-path> option must not be absolute.");
+        }
+
+        if (reference.basePath.length == 0)
+        {
+            throw new Error("The <base-path> option of a reference must contain at least one character.");
         }
 
         // <icon>
