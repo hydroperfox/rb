@@ -9,6 +9,7 @@
 # Not home nor portal start
 
 - [ ] Show the title together with page content.
+- [ ] Page content shall include link to nested sections at the top, as an alternative to the section navigator.
 
 # Search
 

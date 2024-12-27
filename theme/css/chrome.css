@@ -1,0 +1,36 @@
+/* section nav */
+
+.section-nav {
+    display: flex;
+    flex-direction: column;
+    width: 9rem;
+    gap: 0.9rem;
+}
+
+.section-nav-ref {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.section-list {
+    display: flex;
+    flex-direction: column;
+    background: var(--section-connector) repeat-y;
+}
+
+.section-list .empty-connector {
+    background: var(--section-connector-empty-sec) no-repeat;
+}
+
+.section-list .expand-connector {
+    background: var(--section-connector-expand) no-repeat;
+}
+
+.section-list .collapse-connector {
+    background: var(--section-connector-collapse) no-repeat;
+}
+
+.nestable-section .section-list {
+    margin-left: 21px;
+}

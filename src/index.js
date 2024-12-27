@@ -186,7 +186,7 @@ class BuildProcess
                 builder.push('</div></div>');
                 break;
             case TOCItem.REFERENCE:
-                builder.push(`<div class="section-nav-reference" data-slug="${toc.originalObject.slug}"><div>`);
+                builder.push(`<div class="section-nav-ref" data-slug="${toc.originalObject.slug}"><div>`);
                 builder.push(`<b>${toc.title}</b>`);
                 builder.push('</div><div class="section-list">');
                 for (const tocItem of toc.subitems)
@@ -198,11 +198,11 @@ class BuildProcess
             case TOCItem.SECTION:
                 if (toc.subitems.length == 0)
                 {
-                    builder.push(`<div class="section-in-nav"><div><div class="empty-connector"></div><a href="${toc.redirect}">${toc.title}</a></div></div>`);
+                    builder.push(`<div class="nestable-section"><div><div class="empty-connector"></div><a href="${toc.redirect}">${toc.title}</a></div></div>`);
                 }
                 else
                 {
-                    builder.push(`<div class="section-in-nav"><div><div class="open-connector"></div><a href="${toc.redirect}">${toc.title}</a></div><div class="section-list">`);
+                    builder.push(`<div class="nestable-section"><div><div class="expand-connector"></div><a href="${toc.redirect}">${toc.title}</a></div><div class="section-list">`);
                     for (const tocItem of toc.subitems)
                     {
                         builder.push(this.generateSectionNavHTML(tocItem));
