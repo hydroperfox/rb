@@ -40,6 +40,13 @@ export class TOCItem
     subitems = [];
 
     /**
+     * The original object for this `TOCItem` object;
+     * either a `Portal`, a `Reference`, or `Section`.
+     * @type {Object | null}
+     */
+    originalObject = null;
+
+    /**
      * @param {string} type - One of the `TOCItem` static constants.
      * @param {string} title
      * @param {string} redirect

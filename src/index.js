@@ -57,12 +57,16 @@ class BuildProcess
         // Setup the table of contents (TOC)
         const toc = this.setupTOC(portal);
 
-        // Generate HTML for the table of contents (TOC)
-        const tocHTML = this.generateTOCHTML(toc);
+        // Generate HTML for the section navigator (TOC)
+        const sectionNavHTML = this.generateSectionNavHTML(toc);
 
         // Copy media files
         this.copyMediaFiles(path.resolve(workingDir, portal.basePath), outputDir);
 
+        // Generate HTML for the portal root and each section
+        TODO();
+
+        // Generate JavaScript
         TODO();
 
         // Finish
@@ -116,10 +120,12 @@ class BuildProcess
     setupTOC(portal)
     {
         const tocItem1 = new TOCItem(TOCItem.PORTAL, portal.title, "/");
+        tocItem1.originalObject = portal;
 
         for (const reference of portal.references)
         {
             const tocItem2 = new TOCItem(TOCItem.REFERENCE, reference.title, reference.slug);
+            tocItem2.originalObject = reference;
 
             for (const section of reference.sections)
             {
@@ -143,6 +149,7 @@ class BuildProcess
         p = p.endsWith(".md") ? p.slice(0, p.length - 3) : p;
 
         const tocItem2 = new TOCItem(TOCItem.SECTION, section.title, path.resolve(reference.slug, p + ".html"));
+        tocItem2.originalObject = section;
 
         for (const section1 of section.sections)
         {
@@ -154,10 +161,56 @@ class BuildProcess
 
     /**
      * @param {TOCItem} toc
-     * @returns {string}
+     * @returns {string} A HTML to be inserted before page content through JavaScript.
      */
-    generateTOCHTML(toc)
+    generateSectionNavHTML(toc)
     {
-        TODO();
+        const builder = [];
+        switch (toc.type)
+        {
+            case TOCItem.PORTAL:
+                builder.push('<div class="section-nav"><div>');
+
+                // Reference links
+                for (const tocItem of toc.subitems)
+                {
+                    builder.push(`<a href="${tocItem.redirect}">${tocItem.title}</a>`);
+                }
+                builder.push('</div><div>');
+
+                // Sections by reference
+                for (const tocItem of toc.subitems)
+                {
+                    builder.push(this.generateSectionNavHTML(tocItem));
+                }
+                builder.push('</div></div>');
+                break;
+            case TOCItem.REFERENCE:
+                builder.push(`<div class="section-nav-reference" data-slug="${toc.originalObject.slug}"><div>`);
+                builder.push(`<b>${toc.title}</b>`);
+                builder.push('</div><div class="section-list">');
+                for (const tocItem of toc.subitems)
+                {
+                    builder.push(this.generateSectionNavHTML(tocItem));
+                }
+                builder.push('</div></div>');
+                break;
+            case TOCItem.SECTION:
+                if (toc.subitems.length == 0)
+                {
+                    builder.push(`<div class="section-in-nav"><div><div class="empty-connector"></div><a href="${toc.redirect}">${toc.title}</a></div></div>`);
+                }
+                else
+                {
+                    builder.push(`<div class="section-in-nav"><div><div class="open-connector"></div><a href="${toc.redirect}">${toc.title}</a></div><div class="section-list">`);
+                    for (const tocItem of toc.subitems)
+                    {
+                        builder.push(this.generateSectionNavHTML(tocItem));
+                    }
+                    builder.push('</div></div>');
+                }
+                break;
+        }
+        return builder.join("");
     }
 }

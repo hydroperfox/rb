@@ -17,7 +17,7 @@
 # TOC
 
 - [ ] Show TOC when page loads
-- [ ] Expand TOC sections based on current section (if not directly in home or portal start)
+- [ ] Expand TOC sections based on current reference and section (if not directly in home or portal start)
 
 # Style
 
