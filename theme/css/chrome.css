@@ -34,3 +34,25 @@
 .nestable-section .section-list {
     margin-left: 21px;
 }
+
+/* button */
+
+.button {
+    background: var(--button-bg);
+    border: 1px solid var(--button-fg);
+    color: var(--button-fg);
+    padding: 0.7rem;
+}
+
+button:hover {
+    background: var(--button-hover-bg);
+}
+
+.button:disabled {
+    border: 1px solid var(--button-disabled-fg);
+    color: var(--button-disabled-fg);
+}
+
+.button:focus {
+    border: 1px solid var(--focus-border);
+}
