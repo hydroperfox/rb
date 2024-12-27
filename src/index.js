@@ -55,6 +55,9 @@ class BuildProcess
 
         // Setup the table of contents (TOC)
         const toc = this.setupTOC(portal);
+
+        // Generate HTML for the table of contents (TOC)
+        const tocHTML = this.generateTOCHTML(toc);
     }
 
     /**
@@ -118,5 +121,14 @@ class BuildProcess
         }
 
         tocItem1.subitems.push(tocItem2);
+    }
+
+    /**
+     * @param {TOCItem} toc
+     * @returns {string}
+     */
+    generateTOCHTML(toc)
+    {
+        TODO();
     }
 }
