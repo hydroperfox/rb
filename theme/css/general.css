@@ -82,3 +82,11 @@ table thead th {
 table tbody tr:nth-child(2n) {
     background: var(--table-alternate-bg);
 }
+
+/* Quote blocks */
+
+blockquote {
+    background: var(--quote-bg);
+    border: 1px solid var(--quote-border);
+    padding: 0.5rem;
+}

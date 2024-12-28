@@ -12,7 +12,7 @@
   "keywords": [],
   "author": "Matheus Dias de Souza <hydroperfox@gmail.com>",
   "license": "Apache-2.0",
-  "description": "",
+  "description": "Generate reference portals using Markdown.",
   "dependencies": {
     "@xmldom/xmldom": "^0.9.6",
     "chalk": "^5.4.1",

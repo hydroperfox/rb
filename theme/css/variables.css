@@ -20,6 +20,10 @@
     --code-block-border: #ccc;
     --code-block-bg: #F0F7FE;
 
+    /* quote */
+    --quote-border: #bb9;
+    --quote-bg: #ffa;
+
     /* focus */
     --focus-border: #007DD8;
 
