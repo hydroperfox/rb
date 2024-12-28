@@ -189,7 +189,7 @@ class BuildProcess
                 // Reference links
                 for (const tocItem of toc.subitems)
                 {
-                    builder.push(`<a href="${tocItem.redirect}">${tocItem.title}</a>`);
+                    builder.push(`<a href="${tocItem.redirect}"><b>${tocItem.title}</b></a>`);
                 }
                 builder.push('</div>');
 
@@ -213,11 +213,11 @@ class BuildProcess
             case TOCItem.SECTION:
                 if (toc.subitems.length == 0)
                 {
-                    builder.push(`<div class="nestable-section"><div><div class="empty-connector"></div><a href="${toc.redirect}">${toc.title}</a></div></div>`);
+                    builder.push(`<div class="nestable-section"><div><div class="empty-connector"></div><a href="${toc.redirect}"><b>${toc.title}</b></a></div></div>`);
                 }
                 else
                 {
-                    builder.push(`<div class="nestable-section"><div><div class="connector"></div><a href="${toc.redirect}">${toc.title}</a></div><div class="section-list">`);
+                    builder.push(`<div class="nestable-section"><div><div class="connector"></div><a href="${toc.redirect}"><b>${toc.title}</b></a></div><div class="section-list">`);
                     for (const tocItem of toc.subitems)
                     {
                         builder.push(this.generateSectionNavHTML(tocItem));
@@ -384,10 +384,10 @@ class BuildProcess
             const sectionPathLinks = currentSectionPath.slice(1).map(item => {
                 if (item instanceof Reference)
                 {
-                    return `<a href="${pathToRoot + item.basePath}">Home</a>`;
+                    return `<a href="${pathToRoot + item.basePath}"><b>Home</b></a>`;
                 }
                 // Section
-                return `<a href="${pathToRoot + fullSectionPath(reference, item)}">${item.title}</a>`;
+                return `<a href="${pathToRoot + fullSectionPath(reference, item)}"><b>${item.title}</b></a>`;
             });
             const currentSectionPathControls = `<div style="display: flex; flex-direction: row; gap: 0.5rem">${sectionPathLinks.join(" / ")}</div>`;
             const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
