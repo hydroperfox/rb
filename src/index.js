@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { program } from "commander";
 import { globSync } from "glob";
 import * as Handlebars from "handlebars";
+import markdownIt from "markdown-it";
 import * as fs from "fs";
 import * as path from "path";
 import * as url_ns from "url";
@@ -20,6 +21,8 @@ program
     .action(options => {
         new BuildProcess().run();
     });
+
+const md = markdownIt();
 
 class BuildProcess
 {
@@ -153,11 +156,7 @@ class BuildProcess
      */
     setupTOCSection(reference, section, tocItem1)
     {
-        let p = reference.basePath + "/" + section.path;
-        p = p.endsWith(".md") ? p.slice(0, p.length - 3) : p;
-        p = p.replace(/[\\\/]+/g, "/");
-
-        const tocItem2 = new TOCItem(TOCItem.SECTION, section.title, p + ".html");
+        const tocItem2 = new TOCItem(TOCItem.SECTION, section.title, fullSectionPath(reference, section));
         tocItem2.originalObject = section;
 
         for (const section1 of section.sections)
@@ -299,7 +298,35 @@ class BuildProcess
             const topBarIconItem = item.icon ? `<img src="${item.icon}" alt="Icon">` : "";
             const topBarItems = topBarIconItem;
 
-            //
+            // Header controls
+            const nextSec = item.sections.length == 0 ? "" : sectionPathRelativeToReference(item.sections[0]);
+            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1><button class="button" disabled>⯇</button><a href="${nextSec}"><button class="button">⯈</button></a></div>`;
+
+            // Content
+            let content = "";
+            if (item.home !== null)
+            {
+                const homeMarkdown = fs.readFileSync(path.resolve(portal.basePath, item.basePath, item.home.path), "utf-8");
+                content = md.render(homeMarkdown);
+            }
+
+            // Write HTML
+            fs.writeFileSync(path.resolve(outputDir, "index.html"), indexHandlebars({
+                path_to_root: pathToRoot,
+                path_to_reference: pathToReference,
+                title: item.title,
+                top_bar_background: topBarBackground,
+                top_bar_items: topBarItems,
+                header_controls: headerControls,
+                content,
+                footer_controls: "",
+            }));
+
+            // Visit sections
+            for (const section of item.sections)
+            {
+                this.outputHTML(section, outputDir, [portal, item], indexHandlebars);
+            }
         }
         else if (item instanceof Section)
         {
@@ -334,4 +361,27 @@ class BuildProcess
             throw new Error("Could not match item.");
         }
     }
+}
+
+/**
+ * @param {Reference} reference 
+ * @param {Section} section 
+ * @returns {string}
+ */
+function fullSectionPath(reference, section)
+{
+    let p = reference.basePath + "/" + section.path;
+    p = p.endsWith(".md") ? p.slice(0, p.length - 3) : p;
+    return p.replace(/[\\\/]+/g, "/") + ".html";
+}
+
+/**
+ * @param {Section} section 
+ * @returns {string}
+ */
+function sectionPathRelativeToReference(section)
+{
+    let p = section.path;
+    p = p.endsWith(".md") ? p.slice(0, p.length - 3) : p;
+    return p.replace(/[\\\/]+/g, "/") + ".html";
 }
