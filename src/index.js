@@ -268,6 +268,13 @@ class BuildProcess
             // Path to reference (used in output code)
             pathToReference = "./";
 
+            // Top bar background
+            const topBarBackground = `linear-gradient(0deg, ${item.topBarColors?.bottom ?? "#000"} 0%, ${item.topBarColors?.top ?? "#555"} 100%)`;
+
+            // Top bar items
+            const topBarIconItem = item.icon ? `<img src="${item.icon}" alt="Icon">` : "";
+            const topBarItems = topBarIconItem;
+
             //
         }
         else if (item instanceof Section)
@@ -288,6 +295,13 @@ class BuildProcess
             pathToRoot = CommonPathUtil.pathToRoot(CommonPathUtil.join(reference.basePath, item.path));
             // Path to reference (used in output code)
             pathToReference = CommonPathUtil.pathToRoot(item.path);
+
+            // Top bar background
+            const topBarBackground = `linear-gradient(0deg, ${reference.topBarColors?.bottom ?? "#000"} 0%, ${reference.topBarColors?.top ?? "#555"} 100%)`;
+
+            // Top bar items
+            const topBarIconItem = reference.icon ? `<img src="${reference.icon}" alt="Icon">` : "";
+            const topBarItems = topBarIconItem;
 
             //
         }
