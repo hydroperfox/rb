@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<portal>
+    <title>My Reference Portal</title>
+    <base-path>src</base-path>
+    <!-- Optional description -->
+    <description>My reference portal.</description>
+    <!-- Optional top bar colors -->
+    <top-bar-colors top="#999" bottom="#000"/>
+
+    <company-logo>company-logo.png</company-logo>
+
+    <references>
+        <reference>
+            <base-path>demo-reference</base-path>
+            <title>Demo Reference</title>
+            <!-- Optional description -->
+            <description>Demo reference.</description>
+            <!-- Optional top bar colors -->
+            <top-bar-colors top="#999" bottom="#000"/>
+            <home>
+                <!-- src/demo-reference/index.md -->
+                <title>Demo</title>
+                <path>index.md</path>
+            </home>
+            <sections>
+                <section>
+                    <!-- src/demo-reference/foo.md -->
+                    <title>Foo</title>
+                    <path>foo.md</path>
+
+                    <sections>
+                        <section>
+                            <!-- src/demo-reference/foo/bar.md -->
+                            <title>Bar</title>
+                            <path>foo/bar.md</path>
+                        </section>
+                    </sections>
+                </section>
+            </sections>
+        </reference>
+    </references>
+</portal>
