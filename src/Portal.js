@@ -202,6 +202,10 @@ export class Reference
         // <home>
         const homeel = XMLUtil.element(element, null, "home");
         reference.home = homeel ? Section.fromXML(homeel) : null;
+        if (reference.home !== null && reference.home.path != "index.md")
+        {
+            throw new Error("The <home> path must be equals 'index.md'.");
+        }
 
         // <sections>
         const sectionsel = XMLUtil.element(element, null, "sections");
