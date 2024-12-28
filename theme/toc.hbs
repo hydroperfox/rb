@@ -11,25 +11,33 @@
     sectionNav.innerHTML = sectionNavInnerHTML;
     contentContainer.insertBefore(sectionNav, contentContainer.children[0]);
 
-    // Expand related sections of table of contents
+    const hiddenAnchor = document.createElement("a");
+    hiddenAnchor.href = rootPath;
+    document.body.appendChild(hiddenAnchor);
+    hiddenAnchor.remove();
+
+    // Expand related sections from the table of contents
     const sectionOriginalPath = document.querySelector("html").getAttribute("data-section");
     if (sectionOriginalPath != "")
     {
         const anchors = Array.from(sectionNav.querySelectorAll("a"));
         for (let anchor of anchors)
         {
-            anchor = anchor.href.replace(/^(\.\.\/)+/, "");
-            if (anchor == sectionOriginalPath)
+            let href = anchor.href.replace(/^(\.\.\/)+/, "");
+            href = href.replace(hiddenAnchor.href, "");
+            href = href.startsWith("/") ? href.slice(1) : href;
+            if (href == sectionOriginalPath)
             {
                 let p = anchor.parentElement.parentElement;
                 while (p)
                 {
-                    if (p.className.contains("nestable-section"))
+                    if (p.classList.contains("nestable-section"))
                     {
                         p.setAttribute("data-open", true);
                     }
-                    p = anchor.parentElement;
+                    p = p.parentElement;
                 }
+                break;
             }
         }
     }
