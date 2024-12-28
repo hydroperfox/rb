@@ -2,6 +2,20 @@
 
 Create beautiful reference portals using Markdown.
 
+## Getting started
+
+Install the command line tool with:
+
+```sh
+npm i -g com.hydroper.rb
+```
+
+Build a reference portal into HTML (`out` directory) by running the following command:
+
+```sh
+hydroperrb build
+```
+
 ## Documentation
 
 ### Configuration file

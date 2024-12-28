@@ -24,7 +24,10 @@
         for (let anchor of anchors)
         {
             let href = anchor.href.replace(/^(\.\.\/)+/, "");
-            href = href.replace(hiddenAnchor.href, "");
+            if (href.startsWith(hiddenAnchor.href))
+            {
+                href = href.slice(hiddenAnchor.href.length);
+            }
             href = href.startsWith("/") ? href.slice(1) : href;
             if (href == sectionOriginalPath)
             {

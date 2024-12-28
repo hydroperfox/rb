@@ -3,6 +3,7 @@ import { program } from "commander";
 import { globSync } from "glob";
 import Handlebars from "handlebars";
 import markdownIt from "markdown-it";
+import markdownItAnchor from "markdown-it-anchor";
 import * as fs from "fs";
 import * as path from "path";
 import * as url_ns from "url";
@@ -22,7 +23,11 @@ program
         new BuildProcess().run();
     });
 
-const md = markdownIt();
+const md = markdownIt({
+    html: true,
+    linkify: true,
+})
+    .use(markdownItAnchor, {});
 
 class BuildProcess
 {
@@ -390,7 +395,7 @@ class BuildProcess
                 // Section
                 return `<a href="${pathToRoot + fullSectionPath(reference, item)}"><b>${item.title}</b></a>`;
             });
-            const currentSectionPathControls = `<div style="display: flex; flex-direction: row; gap: 0.5rem">${sectionPathLinks.join(" / ")}</div>`;
+            const currentSectionPathControls = `<div style="display: flex; flex-direction: row; gap: 0.5rem">${sectionPathLinks.join(" <b>/</b> ")}</div>`;
             const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
             const footerControls = `<div class="footer-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogoEmpty}</div></div>`;
 
@@ -401,7 +406,17 @@ class BuildProcess
                 const sectionMarkdown = fs.readFileSync(path.resolve(portal.basePath, reference.basePath, item.path), "utf-8");
                 content = md.render(sectionMarkdown);
             }
-            content = `<h1>${item.title}</h1>${content}`;
+            let directSubsections = "";
+            if (item.sections.length > 0)
+            {
+                const builder = [];
+                for (const sec of item.sections)
+                {
+                    builder.push(`<a href="${pathToRoot + fullSectionPath(reference, sec)}"><b>${sec.title}</b></a>`);
+                }
+                directSubsections = `<p style="margin-bottom: 2rem">${builder.join("")}</p>`;
+            }
+            content = `<h1>${item.title}</h1>${directSubsections}${content}`;
 
             // Write HTML
             fs.mkdirSync(path.resolve(fullSectionOutputPath(outputDir, reference, item), ".."), { recursive: true });
