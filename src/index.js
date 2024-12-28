@@ -189,7 +189,7 @@ class BuildProcess
         switch (toc.type)
         {
             case TOCItem.PORTAL:
-                builder.push('<div>');
+                builder.push('<div style="margin-bottom: 0.7rem">');
 
                 // Reference links
                 for (const tocItem of toc.subitems)
@@ -203,7 +203,6 @@ class BuildProcess
                 {
                     builder.push(this.generateSectionNavHTML(tocItem));
                 }
-                builder.push('</div></div>');
                 break;
             case TOCItem.REFERENCE:
                 builder.push(`<div class="section-nav-ref" data-path="${CommonPathUtil.excludeTrailingSlash(toc.originalObject.basePath)}"><div>`);
@@ -395,6 +394,7 @@ class BuildProcess
                 // Section
                 return `<a href="${pathToRoot + fullSectionPath(reference, item)}"><b>${item.title}</b></a>`;
             });
+            sectionPathLinks.splice(1, 0, `<a href="${pathToRoot + reference.basePath + "/index.html"}"><b>${reference.title}</b></a>`);
             const currentSectionPathControls = `<div style="display: flex; flex-direction: row; gap: 0.5rem">${sectionPathLinks.join(" <b>/</b> ")}</div>`;
             const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
             const footerControls = `<div class="footer-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogoEmpty}</div></div>`;
@@ -414,9 +414,9 @@ class BuildProcess
                 {
                     builder.push(`<a href="${pathToRoot + fullSectionPath(reference, sec)}"><b>${sec.title}</b></a>`);
                 }
-                directSubsections = `<p style="margin-bottom: 2rem">${builder.join("")}</p>`;
+                directSubsections = `<hr><p style="margin-top: 2rem">${builder.join("")}</p>`;
             }
-            content = `<h1>${item.title}</h1>${directSubsections}${content}`;
+            content = `<h1>${item.title}</h1>${content}${directSubsections}`;
 
             // Write HTML
             fs.mkdirSync(path.resolve(fullSectionOutputPath(outputDir, reference, item), ".."), { recursive: true });
