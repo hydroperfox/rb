@@ -144,8 +144,3 @@
     display: flex;
     flex-direction: row;
 }
-
-.prev-next-buttons a:nth-child(2) .button,
-.prev-next-buttons div:nth-child(2) .button {
-    border-left: none;
-}

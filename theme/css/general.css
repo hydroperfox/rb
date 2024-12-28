@@ -10,6 +10,9 @@ body {
     color: var(--foreground);
     font-family: var(--font);
     font-size: var(--font-size);
+
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-width: thin;
 }
 
 pre, code {
@@ -22,6 +25,7 @@ pre {
     border: 1px solid var(--code-block-border);
     padding: 0.5rem;
     overflow: auto;
+    margin: 1rem;
 }
 
 a {

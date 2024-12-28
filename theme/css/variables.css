@@ -1,11 +1,14 @@
 :root {
-    --background: #fff;
-    --foreground: #000;
-    --links: #0044A3;
     --font: Arimo, Verdana, Arial, sans;
     --font-size: 0.85rem;
     --mono-font: "Courier Prime", "Courier New", monospace;
-    --mono-font-size: 0.76rem;
+    --mono-font-size: 0.73rem;
+}
+
+:root {
+    --background: #fff;
+    --foreground: #000;
+    --links: #0044A3;
 
     /* header */
     --subheader: #555;
@@ -37,4 +40,49 @@
     --table-border-color: #555;
     --table-header-bg: #999;
     --table-alternate-bg: #bbb;
+
+    /* scrollbar */
+    --scrollbar-thumb: #bbb;
+    --scrollbar-track: #777;
+}
+
+html[data-dark="true"] {
+    --background: #333;
+    --foreground: #fff;
+    --links: #80a4FF;
+
+    /* header */
+    --subheader: #ddd;
+
+    /* 21x26px */
+    --section-connector: url(data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAaAQMAAABij4UAAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAAu7u7N+61SQAAAAJ0Uk5TAP9bkSK1AAAAE0lEQVR4nGNkUHjAyMDAwEhjGgC4og0bCF08YwAAAABJRU5ErkJggg==);
+    --section-connector-empty-sec: url(data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAaAQMAAABij4UAAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAAu7u7N+61SQAAAAJ0Uk5TAP9bkSK1AAAAGUlEQVR4nGNkUHjAyMDAwEg0rVVGmnoIDQCkzAy7bIroqQAAAABJRU5ErkJggg==);
+    --section-connector-expand: url(data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAaAgMAAAAlL//QAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAxQTFRFAAAAu7u7QkJC////BzaulwAAAAR0Uk5TAP///7MtQIgAAAA0SURBVHicY2RgYPnDwMDIAAaMJPBYA/6vAVJsS37FgKgV35Cpn08T9mAIQlRC9ZFsHzIPAPWHGxsCBzMFAAAAAElFTkSuQmCC);
+    --section-connector-collapse: url(data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAaAgMAAAAlL//QAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAxQTFRFAAAAu7u7QkJC////BzaulwAAAAR0Uk5TAP///7MtQIgAAAAuSURBVHicY2RgYPnDwMDIAAaMJPBYA/6vAVJsS37FYFI/nybswSEH1Ueyfcg8APV3GxsHebhhAAAAAElFTkSuQmCC);
+
+    /* code */
+    --code-block-border: #999;
+    --code-block-bg: #50575E;
+
+    /* quote */
+    --quote-border: #995;
+    --quote-bg: #661;
+
+    /* focus */
+    --focus-border: #779DF8;
+
+    /* button */
+    --button-bg: linear-gradient(0deg,#333 0%, #555 100%);
+    --button-hover-bg: linear-gradient(0deg, #333 0%, #777 100%);
+    --button-fg: #aaa;
+    --button-disabled-fg: #656565;
+
+    /* table */
+    --table-border-color: #808080;
+    --table-header-bg: #454545;
+    --table-alternate-bg: #404040;
+
+    /* scrollbar */
+    --scrollbar-thumb: #555;
+    --scrollbar-track: #aaa;
 }
