@@ -250,13 +250,17 @@ class BuildProcess
             const topBarIconItem = item.icon ? `<img src="${item.icon}" alt="Icon">` : "";
             const topBarItems = topBarIconItem;
 
+            // Header controls
+            const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + "/" + companyLogo}">` : "";
+            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1>${companyLogo}</div>`;
+
             // Content
             const links = [];
             for (const reference of item.references)
             {
                 links.push(`<a href="${CommonPathUtil.excludeTrailingSlash(reference.basePath) + "/" + "index.html"}">${reference.title}</a>`);
             }
-            const content = `<h1>${item.title}</h1><p>${links.join("")}</p>`;
+            const content = links.join("");
 
             // Write HTML
             fs.writeFileSync(path.resolve(outputDir, "index.html"), indexHandlebars({
@@ -265,7 +269,7 @@ class BuildProcess
                 title: item.title,
                 top_bar_background: topBarBackground,
                 top_bar_items: topBarItems,
-                header_controls: "",
+                header_controls: headerControls,
                 content,
                 footer_controls: "",
             }));
@@ -300,7 +304,8 @@ class BuildProcess
 
             // Header controls
             const nextSec = item.sections.length == 0 ? "" : sectionPathRelativeToReference(item.sections[0]);
-            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1><button class="button" disabled>⯇</button><a href="${nextSec}"><button class="button">⯈</button></a></div>`;
+            const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + "/" + companyLogo}">` : "";
+            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1><div style="display: flex; flex-direction: row; gap: 1rem;"><button class="button" disabled>⯇</button><a href="${nextSec}"><button class="button">⯈</button></a>${companyLogo}</div></div>`;
 
             // Content
             let content = "";
@@ -355,6 +360,14 @@ class BuildProcess
             const topBarItems = topBarIconItem;
 
             //
+
+            // Visit subsections
+            const nextSectionPath = currentSectionPath.slice(0);
+            nextSectionPath.push(item);
+            for (const subsection of item.sections)
+            {
+                this.outputHTML(subsection, outputDir, nextSectionPath, indexHandlebars);
+            }
         }
         else
         {
