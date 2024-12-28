@@ -1,5 +1,5 @@
 import { DOMParser } from "@xmldom/xmldom";
-import { XMLUtil } from "./util";
+import { XMLUtil } from "./util.js";
 
 export class Portal
 {
@@ -76,7 +76,7 @@ export class Portal
             throw new Error("The <base-path> option must not contain `..` or `.` components.");
         }
 
-        if (/\s*\//.test(portal.basePath))
+        if (/^\s*\//.test(portal.basePath))
         {
             throw new Error("The <base-path> option must not be absolute.");
         }
@@ -176,7 +176,7 @@ export class Reference
             throw new Error("The <base-path> option must not contain `..` or `.` components.");
         }
 
-        if (/\s*\//.test(reference.basePath))
+        if (/^\s*\//.test(reference.basePath))
         {
             throw new Error("The <base-path> option must not be absolute.");
         }
@@ -304,7 +304,7 @@ export class Section
             throw new Error("The <path> option must not contain `..` or `.` components.");
         }
 
-        if (/\s*\//.test(section.path))
+        if (/^\s*\//.test(section.path))
         {
             throw new Error("The <path> option must not be absolute.");
         }

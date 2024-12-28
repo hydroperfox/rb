@@ -1,14 +1,14 @@
 import chalk from "chalk";
 import { program } from "commander";
 import { globSync } from "glob";
-import * as Handlebars from "handlebars";
+import Handlebars from "handlebars";
 import markdownIt from "markdown-it";
 import * as fs from "fs";
 import * as path from "path";
 import * as url_ns from "url";
-import { Portal, Reference, Section, TopBarColors } from "./Portal";
-import { TOCItem } from "./TOCItem";
-import { CommonPathUtil } from "./util";
+import { Portal, Reference, Section, TopBarColors } from "./Portal.js";
+import { TOCItem } from "./TOCItem.js";
+import { CommonPathUtil } from "./util.js";
 
 program
     .name("hydroperrb")
@@ -54,7 +54,7 @@ class BuildProcess
 
         // Output directory
         const outputDir = path.resolve(workingDir, "out");
-        fs.mkdirSync(outputDir);
+        fs.mkdirSync(outputDir, { recursive: true });
 
         // Theme path
         const themePath = path.resolve(selfScriptDir, "../theme");
@@ -75,7 +75,7 @@ class BuildProcess
         const indexHandlebars = Handlebars.compile(fs.readFileSync(path.resolve(themePath, "index.hbs"), "utf-8"));
 
         // Generate HTML for the portal root and each section
-        this.outputHTML(portal, outputDir, indexHandlebars);
+        this.outputHTML(portal, outputDir, null, indexHandlebars);
 
         // Generate JavaScript
         const scriptHandlebars = Handlebars.compile(fs.readFileSync(path.resolve(themePath, "script.hbs"), "utf-8"));
@@ -254,7 +254,7 @@ class BuildProcess
             const topBarItems = topBarIconItem;
 
             // Header controls
-            const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
+            const companyLogo = item.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
             const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1>${companyLogo}</div>`;
 
             // Content
@@ -321,6 +321,7 @@ class BuildProcess
             }
 
             // Write HTML
+            fs.mkdirSync(path.resolve(outputDir, item.basePath), { recursive: true });
             fs.writeFileSync(path.resolve(outputDir, item.basePath, "index.html"), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
@@ -395,6 +396,7 @@ class BuildProcess
             content = `<h1>${item.title}</h1>${content}`;
 
             // Write HTML
+            fs.mkdirSync(path.resolve(fullSectionOutputPath(outputDir, reference, item), ".."), { recursive: true });
             fs.writeFileSync(fullSectionOutputPath(outputDir, reference, item), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
@@ -431,8 +433,9 @@ class BuildProcess
  */
 function fullSectionOutputPath(outputDir, reference, section)
 {
-    const p = p.endsWith(".md") ? p.slice(0, p.length - 3) : p;
-    return path.resolve(reference.basePath, section.path, outputDir, p + ".html");
+    let p = section.path;
+    p = p.endsWith(".md") ? p.slice(0, p.length - 3) : p;
+    return path.resolve(outputDir, reference.basePath, p + ".html");
 }
 
 /**
@@ -473,3 +476,5 @@ function prevNextSections(reference, section)
     }
     return [i > 0 ? a[i - 1] : null, i + 1 < a.length ? a[i + 1] : null];
 }
+
+program.parse();

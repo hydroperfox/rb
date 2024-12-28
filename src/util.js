@@ -11,7 +11,7 @@ export const XMLUtil = {
         for (let i = 0, l = node.childNodes.length; i < l; ++i)
         {
             const c = node.childNodes[i];
-            if (c.nodeType == c.ELEMENT_NODE && XMLUtil.testName(nsURI, localName))
+            if (c.nodeType == c.ELEMENT_NODE && XMLUtil.testName(c, nsURI, localName))
             {
                 r.push(c);
             }
