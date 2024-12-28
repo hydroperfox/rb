@@ -247,7 +247,7 @@ function getFullSectionArray(item)
     {
         for (const sec of item.sections)
         {
-            secs.push(getFullSectionArray(sec));
+            secs.push(...getFullSectionArray(sec));
         }
     }
     else
@@ -255,7 +255,7 @@ function getFullSectionArray(item)
         secs.push(item);
         for (const sec of item.sections)
         {
-            secs.push(getFullSectionArray(sec));
+            secs.push(...getFullSectionArray(sec));
         }
     }
     return secs;
