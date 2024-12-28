@@ -18,7 +18,7 @@
         const anchors = Array.from(sectionNav.querySelectorAll("a"));
         for (let anchor of anchors)
         {
-            anchor = anchor.replace(/^(\.\.\/)+/, "");
+            anchor = anchor.href.replace(/^(\.\.\/)+/, "");
             if (anchor == sectionOriginalPath)
             {
                 let p = anchor.parentElement.parentElement;
@@ -43,7 +43,7 @@
         {
             if (sectionNavRef.getAttribute("data-path") == referenceOriginalPath)
             {
-                sectionNavRef.setAttribute("data-visible", true);
+                sectionNavRef.setAttribute("data-visible", "true");
                 break;
             }
         }
