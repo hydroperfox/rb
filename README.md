@@ -1,6 +1,6 @@
 # RB (Reference Builder)
 
-Create beautiful reference portals using Markdown.
+Create reference portals using Markdown.
 
 ## Getting started
 
