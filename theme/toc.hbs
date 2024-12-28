@@ -56,4 +56,14 @@
             }
         }
     }
+
+    // Handle connector expansion/collapsis
+    const connectors = Array.from(sectionNav.querySelectorAll(".connector"));
+    for (const connector of connectors)
+    {
+        connector.addEventListener("click", e => {
+            const nestableSec = e.target.parentElement.parentElement;
+            nestableSec.setAttribute("data-open", nestableSec.getAttribute("data-open") != "true");
+        });
+    }
 })();
