@@ -258,7 +258,7 @@ class BuildProcess
             const topBarItems = topBarIconItem;
 
             // Header controls
-            const companyLogo = item.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
+            const companyLogo = item.companyLogo ? `<img class="company-logo" src="${pathToRoot + item.companyLogo}">` : "";
             const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1>${companyLogo}</div>`;
 
             // Content
@@ -315,7 +315,7 @@ class BuildProcess
 
             // Header controls
             const nextSec = item.sections.length == 0 ? "" : sectionPathRelativeToReference(item.sections[0]);
-            const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
+            const companyLogo = portal.companyLogo ? `<img class="company-logo" src="${pathToRoot + portal.companyLogo}">` : "";
             const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1><div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons"><div><button class="button" disabled>⯇</button></div><a href="${nextSec}"><button class="button">⯈</button></a></div>${companyLogo}</div></div>`;
 
             // Content
@@ -378,9 +378,10 @@ class BuildProcess
             const [prevsec, nextsec] = prevNextSections(reference, item);
 
             // Header controls
-            const prevSecButton = prevsec ? `<a href="${fullSectionPath(reference, prevsec)}"><button class="button">⯇</button></a>` : '<div><button class="button" disabled>⯇</button></div>';
-            const nextSecButton = nextsec ? `<a href="${fullSectionPath(reference, nextsec)}"><button class="button">⯈</button></a>` : '<div><button class="button" disabled>⯈</button></div>';
-            const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
+            const prevSecButton = prevsec ? `<a href="${pathToRoot + fullSectionPath(reference, prevsec)}"><button class="button">⯇</button></a>` : '<div><button class="button" disabled>⯇</button></div>';
+            const nextSecButton = nextsec ? `<a href="${pathToRoot + fullSectionPath(reference, nextsec)}"><button class="button">⯈</button></a>` : '<div><button class="button" disabled>⯈</button></div>';
+            const companyLogo = portal.companyLogo ? `<img class="company-logo" src="${pathToRoot + portal.companyLogo}">` : "";
+            const companyLogoEmpty = portal.companyLogo ? `<div class="company-logo"></div>` : "";
             const sectionPathLinks = currentSectionPath.slice(1).map(item => {
                 if (item instanceof Reference)
                 {
@@ -391,7 +392,7 @@ class BuildProcess
             });
             const currentSectionPathControls = `<div style="display: flex; flex-direction: row; gap: 0.5rem">${sectionPathLinks.join(" / ")}</div>`;
             const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
-            const footerControls = `<div class="footer-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
+            const footerControls = `<div class="footer-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogoEmpty}</div></div>`;
 
             // Content
             let content = "";

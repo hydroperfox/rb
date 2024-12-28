@@ -19,7 +19,7 @@ The configuration file consists of the filename **rb.xml**.
     <description>My reference portal.</description>
     <!-- Optional icon -->
     <icon>favicon.png</icon>
-    <!-- Optional company logo (attached to the right below the top bar) -->
+    <!-- Optional company logo generally 43x72 pixels (attached to the right below the top bar) -->
     <company-logo>qux.png</company-logo>
     <!-- Optional top bar colors -->
     <top-bar-colors top="#999" bottom="#000"/>

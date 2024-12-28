@@ -23,6 +23,12 @@
     margin-bottom: 1rem;
 }
 
+/* company logo */
+
+.company-logo {
+    width: 2rem;
+}
+
 /* content */
 
 .content {
