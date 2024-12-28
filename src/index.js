@@ -244,6 +244,13 @@ class BuildProcess
             // Path to reference (used in output code)
             pathToReference = "./";
 
+            // Top bar background
+            const topBarBackground = `linear-gradient(0deg, ${item.topBarColors?.bottom ?? "#000"} 0%, ${item.topBarColors?.top ?? "#555"} 100%)`;
+
+            // Top bar items
+            const topBarIconItem = item.icon ? `<img src="${item.icon}" alt="Icon">` : "";
+            const topBarItems = topBarIconItem;
+
             //
         }
         else if (item instanceof Reference)
