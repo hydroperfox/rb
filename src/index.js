@@ -240,7 +240,7 @@ class BuildProcess
         if (item instanceof Portal)
         {
             // Path to root (used in output code)
-            pathToRoot = "";
+            pathToRoot = "./";
             // Path to reference (used in output code)
             pathToReference = "./";
 
@@ -251,7 +251,31 @@ class BuildProcess
             const topBarIconItem = item.icon ? `<img src="${item.icon}" alt="Icon">` : "";
             const topBarItems = topBarIconItem;
 
-            //
+            // Content
+            const links = [];
+            for (const reference of item.references)
+            {
+                links.push(`<a href="${CommonPathUtil.excludeTrailingSlash(reference.basePath) + "/" + "index.html"}">${reference.title}</a>`);
+            }
+            const content = `<h1>${item.title}</h1><p>${links.join("")}</p>`;
+
+            // Write HTML
+            fs.writeFileSync(path.resolve(outputDir, "index.html"), indexHandlebars({
+                path_to_root: pathToRoot,
+                path_to_reference: pathToReference,
+                title: item.title,
+                top_bar_background: topBarBackground,
+                top_bar_items: topBarItems,
+                header_controls: "",
+                content,
+                footer_controls: "",
+            }));
+
+            // Visit references
+            for (const reference of item.references)
+            {
+                this.outputHTML(reference, outputDir, [item], indexHandlebars);
+            }
         }
         else if (item instanceof Reference)
         {
