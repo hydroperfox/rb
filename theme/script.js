@@ -33,4 +33,8 @@
     {
         updateColorMode(initialColorMode);
     }
+    else
+    {
+        updateColorMode("system");
+    }
 })();
