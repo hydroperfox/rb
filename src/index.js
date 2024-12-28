@@ -77,9 +77,9 @@ class BuildProcess
         // Generate HTML for the portal root and each section
         this.outputHTML(portal, outputDir, null, indexHandlebars);
 
-        // Generate JavaScript
-        const scriptHandlebars = Handlebars.compile(fs.readFileSync(path.resolve(themePath, "script.hbs"), "utf-8"));
-        fs.writeFileSync(path.resolve(outputDir, "script.js"), scriptHandlebars({
+        // Generate table of contents JavaScript
+        const scriptHandlebars = Handlebars.compile(fs.readFileSync(path.resolve(themePath, "toc.hbs"), "utf-8"));
+        fs.writeFileSync(path.resolve(outputDir, "toc.js"), scriptHandlebars({
             section_nav: sectionNavHTML,
         }));
 
@@ -296,7 +296,7 @@ class BuildProcess
             const portal = currentSectionPath[0];
 
             // Path to root (used in output code)
-            pathToRoot = "..";
+            pathToRoot = "../";
             // Path to reference (used in output code)
             pathToReference = "./";
 

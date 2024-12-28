@@ -1,11 +1,11 @@
 (() =>
 {
     const contentContainer = document.querySelector(".content-container");
-    const sectionNavInnerHTML = "{{section_nav}}";
-    const sectionNav = document.createElement("div);
+    const sectionNavInnerHTML = `{{{section_nav}}}`;
+    const sectionNav = document.createElement("div");
     sectionNav.className = "section-nav";
     sectionNav.innerHTML = sectionNavInnerHTML;
-    contentContainer.insertChildBefore(sectionNav, contentContainer.children[0]);
+    contentContainer.insertBefore(sectionNav, contentContainer.children[0]);
 
     // Expand related sections of table of contents
     const sectionOriginalPath = document.querySelector("html").getAttribute("data-section");
