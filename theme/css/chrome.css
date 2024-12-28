@@ -1,3 +1,14 @@
+/* top bar */
+
+.top-bar {
+    height: 1.5rem;
+}
+
+.top-bar .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
 /* content container */
 
 .content-container {
@@ -61,18 +72,32 @@
     background: var(--button-bg);
     border: 1px solid var(--button-fg);
     color: var(--button-fg);
-    padding: 0.7rem;
+    font-size: 0.6rem;
+    padding: 0.1rem;
 }
 
-button:hover {
+.button:hover {
     background: var(--button-hover-bg);
 }
 
 .button:disabled {
+    background: var(--button-bg);
     border: 1px solid var(--button-disabled-fg);
     color: var(--button-disabled-fg);
 }
 
 .button:focus {
     border: 1px solid var(--focus-border);
+}
+
+/* prev-next buttons */
+
+.prev-next-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.prev-next-buttons a:nth-child(2) .button,
+.prev-next-buttons div:nth-child(2) .button {
+    border-left: none;
 }

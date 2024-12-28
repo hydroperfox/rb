@@ -27,5 +27,5 @@
     --button-bg: linear-gradient(0deg, rgba(223,223,223,1) 0%, rgba(153,152,152,1) 100%);
     --button-hover-bg: linear-gradient(0deg, rgba(223,223,223,1) 0%, rgba(203,202,202,1) 100%);
     --button-fg: #333;
-    --button-disabled-fg: #777;
+    --button-disabled-fg: #888;
 }

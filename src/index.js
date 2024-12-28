@@ -251,10 +251,10 @@ class BuildProcess
             pathToReference = "./";
 
             // Top bar background
-            const topBarBackground = `linear-gradient(0deg, ${item.topBarColors?.bottom ?? "#000"} 0%, ${item.topBarColors?.top ?? "#555"} 100%)`;
+            const topBarBackground = `background: linear-gradient(0deg, ${item.topBarColors?.bottom ?? "#000"} 0%, ${item.topBarColors?.top ?? "#555"} 100%)`;
 
             // Top bar items
-            const topBarIconItem = item.icon ? `<img src="${item.icon}" alt="Icon">` : "";
+            const topBarIconItem = item.icon ? `<img class="icon" src="${item.icon}" alt="Icon">` : "";
             const topBarItems = topBarIconItem;
 
             // Header controls
@@ -305,16 +305,16 @@ class BuildProcess
             pathToReference = "./";
 
             // Top bar background
-            const topBarBackground = `linear-gradient(0deg, ${item.topBarColors?.bottom ?? "#000"} 0%, ${item.topBarColors?.top ?? "#555"} 100%)`;
+            const topBarBackground = `background: linear-gradient(0deg, ${item.topBarColors?.bottom ?? "#000"} 0%, ${item.topBarColors?.top ?? "#555"} 100%)`;
 
             // Top bar items
-            const topBarIconItem = item.icon ? `<img src="${item.icon}" alt="Icon">` : "";
+            const topBarIconItem = item.icon ? `<img class="icon" src="${item.icon}" alt="Icon">` : "";
             const topBarItems = topBarIconItem;
 
             // Header controls
             const nextSec = item.sections.length == 0 ? "" : sectionPathRelativeToReference(item.sections[0]);
             const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
-            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1><div style="display: flex; flex-direction: row; gap: 1rem;"><button class="button" disabled>⯇</button><a href="${nextSec}"><button class="button">⯈</button></a>${companyLogo}</div></div>`;
+            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1><div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons"><div><button class="button" disabled>⯇</button></div><a href="${nextSec}"><button class="button">⯈</button></a></div>${companyLogo}</div></div>`;
 
             // Content
             let content = "";
@@ -361,22 +361,23 @@ class BuildProcess
 
             // Path to root (used in output code)
             pathToRoot = CommonPathUtil.pathToRoot(CommonPathUtil.join(reference.basePath, item.path));
+            pathToRoot = pathToRoot.replace(/^\.\.\//, "");
             // Path to reference (used in output code)
             pathToReference = CommonPathUtil.pathToRoot(item.path);
 
             // Top bar background
-            const topBarBackground = `linear-gradient(0deg, ${reference.topBarColors?.bottom ?? "#000"} 0%, ${reference.topBarColors?.top ?? "#555"} 100%)`;
+            const topBarBackground = `background: linear-gradient(0deg, ${reference.topBarColors?.bottom ?? "#000"} 0%, ${reference.topBarColors?.top ?? "#555"} 100%)`;
 
             // Top bar items
-            const topBarIconItem = reference.icon ? `<img src="${reference.icon}" alt="Icon">` : "";
+            const topBarIconItem = reference.icon ? `<img class="icon" src="${reference.icon}" alt="Icon">` : "";
             const topBarItems = topBarIconItem;
 
             // Previous/next sections
             const [prevsec, nextsec] = prevNextSections(reference, item);
 
             // Header controls
-            const prevSecButton = prevsec ? `<a href="${fullSectionPath(reference, prevsec)}"><button class="button">⯇</button></a>` : '<a disabled><button class="button">⯇</button></a>';
-            const nextSecButton = nextsec ? `<a href="${fullSectionPath(reference, nextsec)}"><button class="button">⯈</button></a>` : '<a disabled><button class="button">⯈</button></a>';
+            const prevSecButton = prevsec ? `<a href="${fullSectionPath(reference, prevsec)}"><button class="button">⯇</button></a>` : '<div><button class="button" disabled>⯇</button></div>';
+            const nextSecButton = nextsec ? `<a href="${fullSectionPath(reference, nextsec)}"><button class="button">⯈</button></a>` : '<div><button class="button" disabled>⯈</button></div>';
             const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
             const sectionPathLinks = currentSectionPath.slice(1).map(item => {
                 if (item instanceof Reference)
@@ -387,8 +388,8 @@ class BuildProcess
                 return `<a href="${pathToRoot + fullSectionPath(reference, item)}">${item.title}</a>`;
             });
             const currentSectionPathControls = `<div style="display: flex; flex-direction: row; gap: 0.5rem">${sectionPathLinks.join(" / ")}</div>`;
-            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;">${prevSecButton}${nextSecButton}${companyLogo}</div></div>`;
-            const footerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;">${prevSecButton}${nextSecButton}${companyLogo}</div></div>`;
+            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
+            const footerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
 
             // Content
             let content = "";
