@@ -8,9 +8,13 @@
 }
 
 .section-nav-ref {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 0.5rem;
+}
+
+.section-nav-ref[data-visible="true"] {
+    display: flex;
 }
 
 .section-list {
@@ -23,12 +27,20 @@
     background: var(--section-connector-empty-sec) no-repeat;
 }
 
-.section-list .expand-connector {
+.nestable-section .connector {
     background: var(--section-connector-expand) no-repeat;
 }
 
-.section-list .collapse-connector {
+.nestable-section[data-open="true"] .connector {
     background: var(--section-connector-collapse) no-repeat;
+}
+
+.nestable-section > .section-list {
+    display: none;
+}
+
+.nestable-section[data-open="true"] > .section-list {
+    display: flex;
 }
 
 .nestable-section .section-list {

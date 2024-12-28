@@ -211,7 +211,7 @@ class BuildProcess
                 }
                 else
                 {
-                    builder.push(`<div class="nestable-section"><div><div class="expand-connector"></div><a href="${toc.redirect}">${toc.title}</a></div><div class="section-list">`);
+                    builder.push(`<div class="nestable-section"><div><div class="connector"></div><a href="${toc.redirect}">${toc.title}</a></div><div class="section-list">`);
                     for (const tocItem of toc.subitems)
                     {
                         builder.push(this.generateSectionNavHTML(tocItem));
