@@ -20,6 +20,8 @@ pre, code {
 pre {
     background: var(--code-block-bg);
     border: 1px solid var(--code-block-border);
+    padding: 0.5rem;
+    overflow: auto;
 }
 
 a {
@@ -53,4 +55,30 @@ h4 {
 
 h5 {
     font-size: 1.3rem;
+}
+
+/* Tables */
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+table td {
+    padding: 3px 20px;
+    border: 1px var(--table-border-color) solid;
+}
+table thead {
+    background: var(--table-header-bg);
+}
+table thead td {
+    font-weight: 700;
+    border: none;
+}
+table thead th {
+    padding: 3px 20px;
+    border: 1px var(--table-border-color) solid;
+}
+/* Alternate background colors for rows */
+table tbody tr:nth-child(2n) {
+    background: var(--table-alternate-bg);
 }

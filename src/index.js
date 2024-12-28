@@ -385,7 +385,7 @@ class BuildProcess
             const sectionPathLinks = currentSectionPath.slice(1).map(item => {
                 if (item instanceof Reference)
                 {
-                    return `<a href="${pathToRoot + item.basePath}"><b>Home</b></a>`;
+                    return `<a href="${pathToRoot + item.basePath + "/index.html"}"><b>Home</b></a>`;
                 }
                 // Section
                 return `<a href="${pathToRoot + fullSectionPath(reference, item)}"><b>${item.title}</b></a>`;

@@ -5,7 +5,7 @@
     --font: Arimo, Verdana, Arial, sans;
     --font-size: 0.9rem;
     --mono-font: "Courier Prime", "Courier New", monospace;
-    --mono-font-size: 0.87rem;
+    --mono-font-size: 0.76rem;
 
     /* header */
     --subheader: #555;
@@ -28,4 +28,9 @@
     --button-hover-bg: linear-gradient(0deg, rgba(223,223,223,1) 0%, rgba(203,202,202,1) 100%);
     --button-fg: #333;
     --button-disabled-fg: #888;
+
+    /* table */
+    --table-border-color: #555;
+    --table-header-bg: #999;
+    --table-alternate-bg: #bbb;
 }
