@@ -13,7 +13,7 @@ npm i -g com.hydroper.rb
 Build a reference portal into HTML (`out` directory) by running the following command:
 
 ```sh
-hydroperrb build
+hydroper-rb build
 ```
 
 ## Documentation
