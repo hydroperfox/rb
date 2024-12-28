@@ -189,7 +189,7 @@ class BuildProcess
         switch (toc.type)
         {
             case TOCItem.PORTAL:
-                builder.push('<div style="margin-bottom: 0.7rem">');
+                builder.push('<div style="margin-bottom: 0.7rem; display: flex; flex-direction: column; gap: 1rem">');
 
                 // Reference links
                 for (const tocItem of toc.subitems)
@@ -264,7 +264,7 @@ class BuildProcess
             const topBarItems = topBarIconItem + colorModeSelector;
 
             // Header controls
-            const companyLogo = item.companyLogo ? `<img class="company-logo" src="${pathToRoot + item.companyLogo}">` : "";
+            const companyLogo = item.companyLogo ? `<img class="company-logo" height="72" src="${pathToRoot + item.companyLogo}">` : "";
             const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1>${companyLogo}</div>`;
 
             // Content
@@ -281,6 +281,7 @@ class BuildProcess
             fs.writeFileSync(path.resolve(outputDir, "index.html"), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
+                path_to_icon: item.icon ?? "favicon.png",
                 reference_original_path: "",
                 section_original_path: "",
                 title: item.title,
@@ -337,6 +338,7 @@ class BuildProcess
             fs.writeFileSync(path.resolve(outputDir, item.basePath, "index.html"), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
+                path_to_icon: item.icon ?? "favicon.png",
                 reference_original_path: CommonPathUtil.excludeTrailingSlash(item.basePath),
                 section_original_path: "",
                 title: item.title,
@@ -377,7 +379,7 @@ class BuildProcess
             const topBarBackground = `background: linear-gradient(0deg, ${reference.topBarColors?.bottom ?? "#000"} 0%, ${reference.topBarColors?.top ?? "#555"} 100%)`;
 
             // Top bar items
-            const topBarIconItem = reference.icon ? `<img class="icon" src="${reference.icon}" alt="Icon">` : "";
+            const topBarIconItem = reference.icon ? `<img class="icon" src="${pathToReference.replace(/^\.\.\//g, "") + reference.icon}" alt="Icon">` : "";
             const topBarItems = topBarIconItem + colorModeSelector;
 
             // Previous/next sections
@@ -425,6 +427,7 @@ class BuildProcess
             fs.writeFileSync(fullSectionOutputPath(outputDir, reference, item), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
+                path_to_icon: pathToReference.replace(/^\.\.\//g, "") + reference.icon,
                 reference_original_path: CommonPathUtil.excludeTrailingSlash(reference.basePath),
                 section_original_path: fullSectionPath(reference, item),
                 title: item.title,
