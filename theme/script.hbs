@@ -1,0 +1,51 @@
+(() =>
+{
+    const contentContainer = document.querySelector(".content-container");
+    const sectionNavInnerHTML = "{{section_nav}}";
+    const sectionNav = document.createElement("div);
+    sectionNav.className = "section-nav";
+    sectionNav.innerHTML = sectionNavInnerHTML;
+    contentContainer.insertChildBefore(sectionNav, contentContainer.children[0]);
+
+    // Expand related sections of table of contents
+    const sectionOriginalPath = document.querySelector("html").getAttribute("data-section");
+    if (sectionOriginalPath != "")
+    {
+        const anchor = sectionNav.querySelector("a[href='" + sectionOriginalPath + "']");
+        if (anchor)
+        {
+            let p = anchor.parentElement.parentElement;
+            while (p)
+            {
+                if (p.className.contains("nestable-section"))
+                {
+                    p.setAttribute("data-open", true);
+                }
+                p = anchor.parentElement;
+            }
+        }
+    }
+
+    // Prepend root path to anchor links at the section navigator
+    const rootPath = document.querySelector("html").getAttribute("data-root");
+    const anchors = Array.from(sectionNav.querySelectorAll("a"));
+    for (const anchor of anchors)
+    {
+        anchor.href = rootPath + anchor.href;
+    }
+
+    // Turn visible the current reference
+    const referenceOriginalPath = document.querySelector("html").getAttribute("data-reference");
+    if (referenceOriginalPath != "")
+    {
+        const sectionNavRefs = Array.from(sectionNav.querySelectorAll(".section-nav-ref"));
+        for (const sectionNavRef of sectionNavRefs)
+        {
+            if (sectionNavRef.getAttribute("data-path") == referenceOriginalPath)
+            {
+                sectionNavRef.setAttribute("data-visible", true);
+                break;
+            }
+        }
+    }
+})();

@@ -78,7 +78,10 @@ class BuildProcess
         this.outputHTML(portal, outputDir, indexHandlebars);
 
         // Generate JavaScript
-        TODO();
+        const scriptHandlebars = Handlebars.compile(fs.readFileSync(path.resolve(themePath, "script.hbs"), "utf-8"));
+        fs.writeFileSync(path.resolve(outputDir, "script.js"), scriptHandlebars({
+            section_nav: sectionNavHTML,
+        }));
 
         // Finish
         console.log(chalk.green("Successfully generated reference portal at:"), outputDir);
@@ -177,14 +180,14 @@ class BuildProcess
         switch (toc.type)
         {
             case TOCItem.PORTAL:
-                builder.push('<div class="section-nav"><div>');
+                builder.push('<div>');
 
                 // Reference links
                 for (const tocItem of toc.subitems)
                 {
                     builder.push(`<a href="${tocItem.redirect}">${tocItem.title}</a>`);
                 }
-                builder.push('</div><div>');
+                builder.push('</div>');
 
                 // Sections by reference
                 for (const tocItem of toc.subitems)
@@ -266,6 +269,8 @@ class BuildProcess
             fs.writeFileSync(path.resolve(outputDir, "index.html"), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
+                reference_original_path: "",
+                section_original_path: "",
                 title: item.title,
                 top_bar_background: topBarBackground,
                 top_bar_items: topBarItems,
@@ -319,6 +324,8 @@ class BuildProcess
             fs.writeFileSync(path.resolve(outputDir, item.basePath, "index.html"), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
+                reference_original_path: CommonPathUtil.excludeTrailingSlash(item.basePath),
+                section_original_path: "",
                 title: item.title,
                 top_bar_background: topBarBackground,
                 top_bar_items: topBarItems,
@@ -391,6 +398,8 @@ class BuildProcess
             fs.writeFileSync(fullSectionOutputPath(outputDir, reference, item), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
+                reference_original_path: CommonPathUtil.excludeTrailingSlash(reference.basePath),
+                section_original_path: fullSectionPath(reference, item),
                 title: item.title,
                 top_bar_background: topBarBackground,
                 top_bar_items: topBarItems,

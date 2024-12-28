@@ -85,7 +85,7 @@ export const CommonPathUtil = {
      */
     excludeTrailingSlash(p)
     {
-        p = p.replace(/[\\]/g, "/");
+        p = p.replace(/[\\\/]+/g, "/");
         return p.endsWith("/") ? p.slice(0, p.length - 1) : p;
     },
 };
