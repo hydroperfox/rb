@@ -152,6 +152,8 @@ export class Reference
      */
     sections = [];
 
+    m_fullSectionArray = null;
+
     /**
      * @param {Element} element
      * @throws {Error} If XML is invalid.
@@ -220,6 +222,43 @@ export class Reference
 
         return reference;
     }
+
+    /**
+     * @returns {Section[]}
+     */
+    get fullSectionArray()
+    {
+        if (this.m_fullSectionArray === null)
+        {
+            this.m_fullSectionArray = getFullSectionArray(this);
+        }
+        return this.m_fullSectionArray;
+    }
+}
+
+/**
+ * @param {Object} item
+ * @returns {Section[]}
+ */
+function getFullSectionArray(item)
+{
+    const secs = [];
+    if (item instanceof Reference)
+    {
+        for (const sec of item.sections)
+        {
+            secs.push(getFullSectionArray(sec));
+        }
+    }
+    else
+    {
+        secs.push(item);
+        for (const sec of item.sections)
+        {
+            secs.push(getFullSectionArray(sec));
+        }
+    }
+    return secs;
 }
 
 export class Section

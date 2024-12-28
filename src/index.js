@@ -251,7 +251,7 @@ class BuildProcess
             const topBarItems = topBarIconItem;
 
             // Header controls
-            const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + "/" + companyLogo}">` : "";
+            const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
             const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1>${companyLogo}</div>`;
 
             // Content
@@ -304,7 +304,7 @@ class BuildProcess
 
             // Header controls
             const nextSec = item.sections.length == 0 ? "" : sectionPathRelativeToReference(item.sections[0]);
-            const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + "/" + companyLogo}">` : "";
+            const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
             const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1><div style="display: flex; flex-direction: row; gap: 1rem;"><button class="button" disabled>⯇</button><a href="${nextSec}"><button class="button">⯈</button></a>${companyLogo}</div></div>`;
 
             // Content
@@ -316,7 +316,7 @@ class BuildProcess
             }
 
             // Write HTML
-            fs.writeFileSync(path.resolve(outputDir, "index.html"), indexHandlebars({
+            fs.writeFileSync(path.resolve(outputDir, item.basePath, "index.html"), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
                 title: item.title,
@@ -359,7 +359,45 @@ class BuildProcess
             const topBarIconItem = reference.icon ? `<img src="${reference.icon}" alt="Icon">` : "";
             const topBarItems = topBarIconItem;
 
-            //
+            // Previous/next sections
+            const [prevsec, nextsec] = prevNextSections(reference, item);
+
+            // Header controls
+            const prevSecButton = prevsec ? `<a href="${fullSectionPath(reference, prevsec)}"><button class="button">⯇</button></a>` : '<a disabled><button class="button">⯇</button></a>';
+            const nextSecButton = nextsec ? `<a href="${fullSectionPath(reference, nextsec)}"><button class="button">⯈</button></a>` : '<a disabled><button class="button">⯈</button></a>';
+            const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
+            const sectionPathLinks = currentSectionPath.slice(1).map(item => {
+                if (item instanceof Reference)
+                {
+                    return `<a href="${pathToRoot + item.basePath}">Home</a>`;
+                }
+                // Section
+                return `<a href="${pathToRoot + fullSectionPath(reference, item)}">${item.title}</a>`;
+            });
+            const currentSectionPathControls = `<div style="display: flex; flex-direction: row; gap: 0.5rem">${sectionPathLinks.join(" / ")}</div>`;
+            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;">${prevSecButton}${nextSecButton}${companyLogo}</div></div>`;
+            const footerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;">${prevSecButton}${nextSecButton}${companyLogo}</div></div>`;
+
+            // Content
+            let content = "";
+            if (item.home !== null)
+            {
+                const sectionMarkdown = fs.readFileSync(path.resolve(portal.basePath, reference.basePath, item.path), "utf-8");
+                content = md.render(sectionMarkdown);
+            }
+            content = `<h1>${item.title}</h1>${content}`;
+
+            // Write HTML
+            fs.writeFileSync(fullSectionOutputPath(outputDir, reference, item), indexHandlebars({
+                path_to_root: pathToRoot,
+                path_to_reference: pathToReference,
+                title: item.title,
+                top_bar_background: topBarBackground,
+                top_bar_items: topBarItems,
+                header_controls: headerControls,
+                content,
+                footer_controls: footerControls,
+            }));
 
             // Visit subsections
             const nextSectionPath = currentSectionPath.slice(0);
@@ -374,6 +412,18 @@ class BuildProcess
             throw new Error("Could not match item.");
         }
     }
+}
+
+/**
+ * @param {string} outputDir
+ * @param {Reference} reference 
+ * @param {Section} section 
+ * @returns {string}
+ */
+function fullSectionOutputPath(outputDir, reference, section)
+{
+    const p = p.endsWith(".md") ? p.slice(0, p.length - 3) : p;
+    return path.resolve(reference.basePath, section.path, outputDir, p + ".html");
 }
 
 /**
@@ -397,4 +447,20 @@ function sectionPathRelativeToReference(section)
     let p = section.path;
     p = p.endsWith(".md") ? p.slice(0, p.length - 3) : p;
     return p.replace(/[\\\/]+/g, "/") + ".html";
+}
+
+/**
+ * @param {Reference} reference
+ * @param {Section} section
+ * @returns {[Section | null, Section | null]}
+ */
+function prevNextSections(reference, section)
+{
+    const a = reference.fullSectionArray;
+    const i = a.indexOf(section);
+    if (i == -1)
+    {
+        return [null, null];
+    }
+    return [i > 0 ? a[i - 1] : null, i + 1 < a.length ? a[i + 1] : null];
 }
