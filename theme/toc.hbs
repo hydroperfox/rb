@@ -1,7 +1,11 @@
 (() =>
 {
     const contentContainer = document.querySelector(".content-container");
-    const sectionNavInnerHTML = `{{{section_nav}}}`;
+    const rootPath = document.querySelector("html").getAttribute("data-root");
+    
+    // Prepend root path to anchor links at the section navigator
+    let sectionNavInnerHTML = `{{{section_nav}}}`.replace('a href="', 'a href="' + rootPath);
+
     const sectionNav = document.createElement("div");
     sectionNav.className = "section-nav";
     sectionNav.innerHTML = sectionNavInnerHTML;
@@ -11,27 +15,23 @@
     const sectionOriginalPath = document.querySelector("html").getAttribute("data-section");
     if (sectionOriginalPath != "")
     {
-        const anchor = sectionNav.querySelector("a[href='" + sectionOriginalPath + "']");
-        if (anchor)
+        const anchors = Array.from(sectionNav.querySelectorAll("a"));
+        for (let anchor of anchors)
         {
-            let p = anchor.parentElement.parentElement;
-            while (p)
+            anchor = anchor.replace(/^(\.\.\/)+/, "");
+            if (anchor == sectionOriginalPath)
             {
-                if (p.className.contains("nestable-section"))
+                let p = anchor.parentElement.parentElement;
+                while (p)
                 {
-                    p.setAttribute("data-open", true);
+                    if (p.className.contains("nestable-section"))
+                    {
+                        p.setAttribute("data-open", true);
+                    }
+                    p = anchor.parentElement;
                 }
-                p = anchor.parentElement;
             }
         }
-    }
-
-    // Prepend root path to anchor links at the section navigator
-    const rootPath = document.querySelector("html").getAttribute("data-root");
-    const anchors = Array.from(sectionNav.querySelectorAll("a"));
-    for (const anchor of anchors)
-    {
-        anchor.href = rootPath + anchor.href;
     }
 
     // Turn visible the current reference

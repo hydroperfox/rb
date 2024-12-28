@@ -80,7 +80,7 @@ class BuildProcess
         // Generate table of contents JavaScript
         const scriptHandlebars = Handlebars.compile(fs.readFileSync(path.resolve(themePath, "toc.hbs"), "utf-8"));
         fs.writeFileSync(path.resolve(outputDir, "toc.js"), scriptHandlebars({
-            section_nav: sectionNavHTML,
+            section_nav: sectionNavHTML.replace(/`/g, "&#x60;"),
         }));
 
         // Finish
@@ -93,7 +93,9 @@ class BuildProcess
      */
     copyTheme(themePath, outputDir)
     {
-        const filenames = globSync(path.resolve(themePath, "**/*.{txt,css,ttf,otf,woff,woff2,png,jpg,jpeg}"));
+        const filenames = globSync("/**/*.{txt,css,ttf,otf,woff,woff2,png,jpg,jpeg}", {
+            root: path.resolve(themePath),
+        });
         outputDir = path.normalize(outputDir);
         themePath = path.normalize(themePath);
         themePath = themePath + (themePath.endsWith(path.sep) ? "" : path.sep);
@@ -113,7 +115,9 @@ class BuildProcess
      */
     copyMediaFiles(mediaDir, outputDir)
     {
-        const filenames = globSync(path.resolve(mediaDir, "**/*.{png,bmp,gif,jpg,jpeg,svg,mp4}"));
+        const filenames = globSync("/**/*.{png,bmp,gif,jpg,jpeg,svg,mp4}", {
+            root: path.resolve(mediaDir),
+        });
         outputDir = path.normalize(outputDir);
         mediaDir = path.normalize(mediaDir);
         mediaDir = mediaDir + (mediaDir.endsWith(path.sep) ? "" : path.sep);
