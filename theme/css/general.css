@@ -78,6 +78,9 @@ table thead td {
     font-weight: 700;
     border: none;
 }
+table td, table tr {
+    font-size: var(--font-size);
+}
 table thead th {
     padding: 3px 20px;
     border: 1px var(--table-border-color) solid;
@@ -93,4 +96,18 @@ blockquote {
     background: var(--quote-bg);
     border: 1px solid var(--quote-border);
     padding: 0.5rem;
+}
+
+/* Selector */
+
+select {
+    background: var(--selector-bg);
+    border: 1px solid var(--selector-border);
+    padding: 0.3rem;
+    font-size: 0.73rem;
+    color: var(--foreground);
+}
+
+select:hover, select:active, select:focus {
+    outline: none;
 }

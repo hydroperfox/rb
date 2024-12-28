@@ -34,6 +34,11 @@
                             <title>Bar</title>
                             <path>foo/bar.md</path>
                         </section>
+                        <section>
+                            <!-- src/demo-reference/foo/fu.md -->
+                            <title>Fu</title>
+                            <path>foo/fu.md</path>
+                        </section>
                     </sections>
                 </section>
                 <section>

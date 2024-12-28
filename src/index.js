@@ -98,7 +98,7 @@ class BuildProcess
      */
     copyTheme(themePath, outputDir)
     {
-        const filenames = globSync("/**/*.{txt,css,ttf,otf,woff,woff2,png,jpg,jpeg}", {
+        const filenames = globSync("/**/*.{txt,js,css,ttf,otf,woff,woff2,png,jpg,jpeg}", {
             root: path.resolve(themePath),
         });
         outputDir = path.normalize(outputDir);
@@ -247,6 +247,8 @@ class BuildProcess
         // Path to reference home (used in output code)
         let pathToReference = "";
 
+        const colorModeSelector = '<select id="color-mode-selector"><option value="system">System color</option><option value="light">Light</option><option value="dark">Dark</option></select>';
+
         if (item instanceof Portal)
         {
             // Path to root (used in output code)
@@ -259,7 +261,7 @@ class BuildProcess
 
             // Top bar items
             const topBarIconItem = item.icon ? `<img class="icon" src="${item.icon}" alt="Icon">` : "";
-            const topBarItems = topBarIconItem;
+            const topBarItems = topBarIconItem + colorModeSelector;
 
             // Header controls
             const companyLogo = item.companyLogo ? `<img class="company-logo" src="${pathToRoot + item.companyLogo}">` : "";
@@ -315,12 +317,12 @@ class BuildProcess
 
             // Top bar items
             const topBarIconItem = item.icon ? `<img class="icon" src="${item.icon}" alt="Icon">` : "";
-            const topBarItems = topBarIconItem;
+            const topBarItems = topBarIconItem + colorModeSelector;
 
             // Header controls
             const nextSec = item.sections.length == 0 ? "" : sectionPathRelativeToReference(item.sections[0]);
             const companyLogo = portal.companyLogo ? `<img class="company-logo" src="${pathToRoot + portal.companyLogo}">` : "";
-            const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1><div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons"><div><button class="button" disabled>⯇</button></div><a href="${nextSec}"><button class="button">⯈</button></a></div>${companyLogo}</div></div>`;
+            const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1><div style="display: flex; flex-direction: row; gap: 1rem; align-items: end"><div class="prev-next-buttons"><div><button class="button" disabled>⯇</button></div><a href="${nextSec}"><button class="button">⯈</button></a></div>${companyLogo}</div></div>`;
 
             // Content
             let content = "";
@@ -376,7 +378,7 @@ class BuildProcess
 
             // Top bar items
             const topBarIconItem = reference.icon ? `<img class="icon" src="${reference.icon}" alt="Icon">` : "";
-            const topBarItems = topBarIconItem;
+            const topBarItems = topBarIconItem + colorModeSelector;
 
             // Previous/next sections
             const [prevsec, nextsec] = prevNextSections(reference, item);
@@ -396,7 +398,7 @@ class BuildProcess
             });
             sectionPathLinks.splice(1, 0, `<a href="${pathToRoot + reference.basePath + "/index.html"}"><b>${reference.title}</b></a>`);
             const currentSectionPathControls = `<div style="display: flex; flex-direction: row; gap: 0.5rem">${sectionPathLinks.join(" <b>/</b> ")}</div>`;
-            const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
+            const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem; align-items: end"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
             const footerControls = `<div class="footer-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogoEmpty}</div></div>`;
 
             // Content
@@ -412,7 +414,7 @@ class BuildProcess
                 const builder = [];
                 for (const sec of item.sections)
                 {
-                    builder.push(`<a href="${pathToRoot + fullSectionPath(reference, sec)}"><b>${sec.title}</b></a>`);
+                    builder.push(`<p><a href="${pathToRoot + fullSectionPath(reference, sec)}"><b>${sec.title}</b></a></p>`);
                 }
                 directSubsections = `<hr><p style="margin-top: 2rem">${builder.join("")}</p>`;
             }

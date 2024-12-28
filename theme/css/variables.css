@@ -1,8 +1,8 @@
 :root {
     --font: Arimo, Verdana, Arial, sans;
-    --font-size: 0.85rem;
+    --font-size: 0.8rem;
     --mono-font: "Courier Prime", "Courier New", monospace;
-    --mono-font-size: 0.73rem;
+    --mono-font-size: 0.72rem;
 }
 
 :root {
@@ -42,8 +42,12 @@
     --table-alternate-bg: #bbb;
 
     /* scrollbar */
-    --scrollbar-thumb: #bbb;
-    --scrollbar-track: #777;
+    --scrollbar-thumb: #777;
+    --scrollbar-track: #ddd;
+
+    /* selector */
+    --selector-bg: #fff;
+    --selector-border: #777;
 }
 
 html[data-dark="true"] {
@@ -85,4 +89,8 @@ html[data-dark="true"] {
     /* scrollbar */
     --scrollbar-thumb: #555;
     --scrollbar-track: #aaa;
+
+    /* selector */
+    --selector-bg: #333;
+    --selector-border: #999;
 }
