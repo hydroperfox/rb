@@ -259,15 +259,17 @@ class BuildProcess
 
             // Header controls
             const companyLogo = item.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
-            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1>${companyLogo}</div>`;
+            const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1>${companyLogo}</div>`;
 
             // Content
+            /*
             const links = [];
             for (const reference of item.references)
             {
                 links.push(`<a href="${CommonPathUtil.excludeTrailingSlash(reference.basePath) + "/" + "index.html"}">${reference.title}</a>`);
             }
-            const content = links.join("");
+            */
+            const content = "";
 
             // Write HTML
             fs.writeFileSync(path.resolve(outputDir, "index.html"), indexHandlebars({
@@ -314,7 +316,7 @@ class BuildProcess
             // Header controls
             const nextSec = item.sections.length == 0 ? "" : sectionPathRelativeToReference(item.sections[0]);
             const companyLogo = portal.companyLogo ? `<img src="${pathToRoot + companyLogo}">` : "";
-            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1><div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons"><div><button class="button" disabled>⯇</button></div><a href="${nextSec}"><button class="button">⯈</button></a></div>${companyLogo}</div></div>`;
+            const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between"><h1>${item.title}</h1><div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons"><div><button class="button" disabled>⯇</button></div><a href="${nextSec}"><button class="button">⯈</button></a></div>${companyLogo}</div></div>`;
 
             // Content
             let content = "";
@@ -388,8 +390,8 @@ class BuildProcess
                 return `<a href="${pathToRoot + fullSectionPath(reference, item)}">${item.title}</a>`;
             });
             const currentSectionPathControls = `<div style="display: flex; flex-direction: row; gap: 0.5rem">${sectionPathLinks.join(" / ")}</div>`;
-            const headerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
-            const footerControls = `<div style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
+            const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
+            const footerControls = `<div class="footer-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
 
             // Content
             let content = "";

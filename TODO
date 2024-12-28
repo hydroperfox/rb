@@ -1,25 +1,10 @@
-# Portal start
+# Fix bugs
 
-- [x] Omit section path and header controls, showing title and content consisting of reference links.
-
-# Home
-
-- [x] Omit current section path and show the title together to the header controls at the left side.
-
-# Not home nor portal start
-
-- [x] Show the title together with page content.
-- [x] Page content shall include link to nested sections at the top, as an alternative to the section navigator.
+- [ ] Section navigator: section links
 
 # Search
 
 - [ ] Implement searching for section titles.
-
-# script.js
-
-- [x] Show TOC when page loads, replacing anchor links there so that they are relative to current page
-- [x] Turn visible the current reference in TOC
-- [x] Expand TOC sections based on current reference and section (if not directly in home or portal start)
 
 # Style
 
