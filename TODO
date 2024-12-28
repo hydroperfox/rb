@@ -15,9 +15,10 @@
 
 - [ ] Implement searching for section titles.
 
-# TOC
+# script.js
 
 - [ ] Show TOC when page loads, replacing anchor links there so that they are relative to current page
+- [ ] Turn visible the current reference in TOC
 - [ ] Expand TOC sections based on current reference and section (if not directly in home or portal start)
 
 # Style
