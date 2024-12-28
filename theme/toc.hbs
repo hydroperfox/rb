@@ -4,7 +4,7 @@
     const rootPath = document.querySelector("html").getAttribute("data-root");
     
     // Prepend root path to anchor links at the section navigator
-    let sectionNavInnerHTML = `{{{section_nav}}}`.replace('a href="', 'a href="' + rootPath);
+    let sectionNavInnerHTML = `{{{section_nav}}}`.replace(/a href="/g, 'a href="' + rootPath);
 
     const sectionNav = document.createElement("div");
     sectionNav.className = "section-nav";
