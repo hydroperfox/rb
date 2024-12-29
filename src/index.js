@@ -268,14 +268,12 @@ class BuildProcess
             const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between"><h1 class="section-heading-title">${item.title}</h1>${companyLogo}</div>`;
 
             // Content
-            /*
             const links = [];
             for (const reference of item.references)
             {
-                links.push(`<a href="${CommonPathUtil.excludeTrailingSlash(reference.basePath) + "/" + "index.html"}">${reference.title}</a>`);
+                links.push(`<p><a href="${CommonPathUtil.excludeTrailingSlash(reference.basePath) + "/" + "index.html"}">${reference.title}</a></p>`);
             }
-            */
-            const content = "";
+            const content = links.join("");
 
             // Write HTML
             fs.writeFileSync(path.resolve(outputDir, "index.html"), indexHandlebars({

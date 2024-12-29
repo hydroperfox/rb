@@ -2,53 +2,52 @@
 {
     const contentContainer = document.querySelector(".content-container");
     const rootPath = document.querySelector("html").getAttribute("data-root");
-    
+    const referenceOriginalPath = document.querySelector("html").getAttribute("data-reference");
+
     // Prepend root path to anchor links at the section navigator
     let sectionNavInnerHTML = `{{{section_nav}}}`.replace(/a href="/g, 'a href="' + rootPath);
 
-    const sectionNav = document.createElement("div");
-    sectionNav.className = "section-nav";
-    sectionNav.innerHTML = sectionNavInnerHTML;
-    contentContainer.insertBefore(sectionNav, contentContainer.children[0]);
-
-    const hiddenAnchor = document.createElement("a");
-    hiddenAnchor.href = rootPath;
-    document.body.appendChild(hiddenAnchor);
-    hiddenAnchor.remove();
-
-    // Expand related sections from the table of contents
-    const sectionOriginalPath = document.querySelector("html").getAttribute("data-section");
-    if (sectionOriginalPath != "")
-    {
-        const anchors = Array.from(sectionNav.querySelectorAll("a"));
-        for (let anchor of anchors)
-        {
-            let href = anchor.href.replace(/^(\.\.\/)+/, "");
-            if (href.startsWith(hiddenAnchor.href))
-            {
-                href = href.slice(hiddenAnchor.href.length);
-            }
-            href = href.startsWith("/") ? href.slice(1) : href;
-            if (href == sectionOriginalPath)
-            {
-                let p = anchor.parentElement.parentElement;
-                while (p)
-                {
-                    if (p.classList.contains("nestable-section"))
-                    {
-                        p.setAttribute("data-open", true);
-                    }
-                    p = p.parentElement;
-                }
-                break;
-            }
-        }
-    }
-
-    // Turn visible the current reference
-    const referenceOriginalPath = document.querySelector("html").getAttribute("data-reference");
     if (referenceOriginalPath != "")
     {
+        const sectionNav = document.createElement("div");
+        sectionNav.className = "section-nav";
+        sectionNav.innerHTML = sectionNavInnerHTML;
+        contentContainer.insertBefore(sectionNav, contentContainer.children[0]);
+
+        const hiddenAnchor = document.createElement("a");
+        hiddenAnchor.href = rootPath;
+        document.body.appendChild(hiddenAnchor);
+        hiddenAnchor.remove();
+
+        // Expand related sections from the table of contents
+        const sectionOriginalPath = document.querySelector("html").getAttribute("data-section");
+        if (sectionOriginalPath != "")
+        {
+            const anchors = Array.from(sectionNav.querySelectorAll("a"));
+            for (let anchor of anchors)
+            {
+                let href = anchor.href.replace(/^(\.\.\/)+/, "");
+                if (href.startsWith(hiddenAnchor.href))
+                {
+                    href = href.slice(hiddenAnchor.href.length);
+                }
+                href = href.startsWith("/") ? href.slice(1) : href;
+                if (href == sectionOriginalPath)
+                {
+                    let p = anchor.parentElement.parentElement;
+                    while (p)
+                    {
+                        if (p.classList.contains("nestable-section"))
+                        {
+                            p.setAttribute("data-open", true);
+                        }
+                        p = p.parentElement;
+                    }
+                    break;
+                }
+            }
+        }
+
         const sectionNavRefs = Array.from(sectionNav.querySelectorAll(".section-nav-ref"));
         for (const sectionNavRef of sectionNavRefs)
         {
@@ -58,15 +57,15 @@
                 break;
             }
         }
-    }
 
-    // Handle connector expansion/collapsis
-    const connectors = Array.from(sectionNav.querySelectorAll(".connector"));
-    for (const connector of connectors)
-    {
-        connector.addEventListener("click", e => {
-            const nestableSec = e.target.parentElement.parentElement;
-            nestableSec.setAttribute("data-open", nestableSec.getAttribute("data-open") != "true");
-        });
+        // Handle connector expansion/collapsis
+        const connectors = Array.from(sectionNav.querySelectorAll(".connector"));
+        for (const connector of connectors)
+        {
+            connector.addEventListener("click", e => {
+                const nestableSec = e.target.parentElement.parentElement;
+                nestableSec.setAttribute("data-open", nestableSec.getAttribute("data-open") != "true");
+            });
+        }
     }
 })();
