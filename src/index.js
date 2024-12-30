@@ -279,7 +279,7 @@ class BuildProcess
             fs.writeFileSync(path.resolve(outputDir, "index.html"), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
-                path_to_icon: item.icon ?? "favicon.png",
+                path_to_icon: "favicon.png",
                 reference_original_path: "",
                 section_original_path: "",
                 title: item.title,
@@ -336,7 +336,7 @@ class BuildProcess
             fs.writeFileSync(path.resolve(outputDir, item.basePath, "index.html"), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
-                path_to_icon: item.icon ?? "favicon.png",
+                path_to_icon: "favicon.png",
                 reference_original_path: CommonPathUtil.excludeTrailingSlash(item.basePath),
                 section_original_path: "",
                 title: item.title,
@@ -425,7 +425,7 @@ class BuildProcess
             fs.writeFileSync(fullSectionOutputPath(outputDir, reference, item), indexHandlebars({
                 path_to_root: pathToRoot,
                 path_to_reference: pathToReference,
-                path_to_icon: pathToReference.replace(/^\.\.\//g, "") + reference.icon,
+                path_to_icon: pathToReference.replace(/^\.\.\//g, "") + "favicon.png",
                 reference_original_path: CommonPathUtil.excludeTrailingSlash(reference.basePath),
                 section_original_path: fullSectionPath(reference, item),
                 title: item.title,
