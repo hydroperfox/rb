@@ -13,6 +13,16 @@
     height: 1.5rem;
 }
 
+#toggleSidebar {
+    display: none;
+}
+
+@media only screen and (hover: none) and (pointer: coarse) {
+    #toggleSidebar {
+        display: inline-block;
+    }
+}
+
 /* content container */
 
 .content-container {
@@ -55,6 +65,24 @@
     gap: 0.9rem;
     word-break: break-all;
     font-size: 13px;
+}
+
+@media only screen and (hover: none) and (pointer: coarse) {
+    .section-nav {
+        position: absolute;
+        background: var(--background);
+        left: 0;
+        top: 2.1rem;
+        padding: 1rem;
+        width: 100%;
+        bottom: 0;
+        display: none;
+        overflow-y: auto;
+    }
+    
+    .section-nav[data-visible="true"] {
+        display: flex;
+    }
 }
 
 .section-nav-ref {

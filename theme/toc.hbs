@@ -14,6 +14,11 @@
         sectionNav.innerHTML = sectionNavInnerHTML;
         contentContainer.insertBefore(sectionNav, contentContainer.children[0]);
 
+        const toggleSidebar = document.getElementById("toggleSidebar");
+        toggleSidebar.addEventListener("click", e => {
+            sectionNav.setAttribute("data-visible", sectionNav.getAttribute("data-visible") != "true");
+        });
+
         const hiddenAnchor = document.createElement("a");
         hiddenAnchor.href = rootPath;
         document.body.appendChild(hiddenAnchor);

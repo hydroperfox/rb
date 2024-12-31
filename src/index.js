@@ -249,6 +249,8 @@ class BuildProcess
 
         const colorModeSelector = '<select id="color-mode-selector"><option value="system">System color</option><option value="light">Light</option><option value="dark">Dark</option></select>';
 
+        const toggleSidebar = '<button class="button" id="toggleSidebar">Sidebar</button>';
+
         if (item instanceof Portal)
         {
             // Path to root (used in output code)
@@ -261,7 +263,7 @@ class BuildProcess
 
             // Top bar items
             const topBarIconItem = item.icon ? `<img class="icon" src="${item.icon}" alt="Icon">` : "";
-            const topBarItems = topBarIconItem + colorModeSelector;
+            const topBarItems = topBarIconItem + colorModeSelector + toggleSidebar;
 
             // Header controls
             const companyLogo = item.companyLogo ? `<img class="company-logo" height="72" src="${pathToRoot + item.companyLogo}">` : "";
@@ -316,7 +318,7 @@ class BuildProcess
 
             // Top bar items
             const topBarIconItem = item.icon ? `<img class="icon" src="${item.icon}" alt="Icon">` : "";
-            const topBarItems = topBarIconItem + colorModeSelector;
+            const topBarItems = topBarIconItem + colorModeSelector + toggleSidebar;
 
             // Header controls
             const nextSec = item.sections.length == 0 ? "" : sectionPathRelativeToReference(item.sections[0]);
@@ -378,7 +380,7 @@ class BuildProcess
 
             // Top bar items
             const topBarIconItem = reference.icon ? `<img class="icon" src="${pathToReference.replace(/^\.\.\//g, "") + reference.icon}" alt="Icon">` : "";
-            const topBarItems = topBarIconItem + colorModeSelector;
+            const topBarItems = topBarIconItem + colorModeSelector + toggleSidebar;
 
             // Previous/next sections
             const [prevsec, nextsec] = prevNextSections(reference, item);
