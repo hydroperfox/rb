@@ -273,7 +273,7 @@ class BuildProcess
             const links = [];
             for (const reference of item.references)
             {
-                links.push(`<p><a href="${CommonPathUtil.excludeTrailingSlash(reference.basePath) + "/" + "index.html"}">${reference.title}</a></p>`);
+                links.push(`<p><a href="${CommonPathUtil.excludeTrailingSlash(reference.basePath) + "/" + "index.html"}"><b>${reference.title}</b></a></p>`);
             }
             const content = links.join("");
 
@@ -399,7 +399,7 @@ class BuildProcess
                 return `<a href="${pathToRoot + fullSectionPath(reference, item)}"><b>${item.title}</b></a>`;
             });
             sectionPathLinks.splice(1, 0, `<a href="${pathToRoot + reference.basePath + "/index.html"}"><b>${reference.title}</b></a>`);
-            const currentSectionPathControls = `<div style="display: flex; flex-direction: row; gap: 0.5rem">${sectionPathLinks.join(" <b>/</b> ")}</div>`;
+            const currentSectionPathControls = `<div style="display: flex; flex-direction: row; gap: 0.5rem; overflow-x: auto">${sectionPathLinks.join(" <b>/</b> ")}</div>`;
             const headerControls = `<div class="header-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem; align-items: end"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogo}</div></div>`;
             const footerControls = `<div class="footer-controls" style="display: flex; flex-direction: row; justify-content: space-between">${currentSectionPathControls}<div style="display: flex; flex-direction: row; gap: 1rem;"><div class="prev-next-buttons">${prevSecButton}${nextSecButton}</div>${companyLogoEmpty}</div></div>`;
 
