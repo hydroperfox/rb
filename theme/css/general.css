@@ -28,6 +28,10 @@ pre {
     margin: 1rem;
 }
 
+li {
+    margin: 0.5rem;
+}
+
 a {
     color: var(--links);
     text-decoration: none;
